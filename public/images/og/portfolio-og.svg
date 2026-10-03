@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="100%" height="100%">
+  <defs>
+    <linearGradient id="ogBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#121316"/>
+      <stop offset="100%" stop-color="#1b1d22"/>
+    </linearGradient>
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#20b8cd"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#ogBg)"/>
+  <circle cx="950" cy="200" r="300" fill="#20b8cd" fill-opacity="0.12" filter="blur(80px)"/>
+  
+  <rect x="80" y="80" width="64" height="64" rx="16" fill="url(#brandGrad)"/>
+  <text x="112" y="122" fill="#041f24" font-family="system-ui, sans-serif" font-size="28" font-weight="900" text-anchor="middle">PS</text>
+
+  <text x="80" y="240" fill="#20b8cd" font-family="monospace" font-size="22" font-weight="bold">PRASOON SONI // PORTFOLIO</text>
+  <text x="80" y="320" fill="#f3f4f6" font-family="system-ui, sans-serif" font-size="56" font-weight="900">Frontend &amp; Full-Stack Engineer</text>
+  <text x="80" y="390" fill="#9ca3af" font-family="system-ui, sans-serif" font-size="24">Trainee @ Raj Digital, Bhopal &bull; B.Tech Computer Science 2026</text>
+
+  <rect x="80" y="460" width="300" height="54" rx="14" fill="#262930" stroke="#3b3f49" stroke-width="2"/>
+  <text x="230" y="495" fill="#f3f4f6" font-family="monospace" font-size="18" text-anchor="middle">github.com/Prasoonsoni398</text>
+</svg>

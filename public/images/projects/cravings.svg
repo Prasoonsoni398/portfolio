@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgCravings" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#141824"/>
+      <stop offset="100%" stop-color="#1f2738"/>
+    </linearGradient>
+    <linearGradient id="glowOrange" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#fb923c"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#242e42"/>
+      <stop offset="100%" stop-color="#19202f"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#bgCravings)" rx="16"/>
+  <rect x="30" y="30" width="740" height="50" rx="10" fill="#1b2333" stroke="#2e3b52" stroke-width="1.5"/>
+  <circle cx="60" cy="55" r="6" fill="#ef4444"/>
+  <circle cx="80" cy="55" r="6" fill="#f59e0b"/>
+  <circle cx="100" cy="55" r="6" fill="#10b981"/>
+  
+  <rect x="130" y="43" width="300" height="24" rx="6" fill="#141a26"/>
+  <text x="145" y="59" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="12">cravings.app/explore-menus</text>
+
+  <!-- Left Sidebar / Category Filter -->
+  <rect x="30" y="100" width="190" height="370" rx="12" fill="url(#cardGrad)" stroke="#2e3b52" stroke-width="1.5"/>
+  <text x="50" y="135" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="15" font-weight="bold">Categories</text>
+  
+  <rect x="45" y="155" width="160" height="36" rx="8" fill="url(#glowOrange)"/>
+  <text x="60" y="178" fill="#ffffff" font-family="system-ui, sans-serif" font-size="13" font-weight="600">🍕 Gourmet Pizzas</text>
+
+  <rect x="45" y="200" width="160" height="36" rx="8" fill="#1b2333"/>
+  <text x="60" y="223" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="13">🥗 Healthy Bowls</text>
+
+  <rect x="45" y="245" width="160" height="36" rx="8" fill="#1b2333"/>
+  <text x="60" y="268" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="13">🍣 Artisan Sushi</text>
+
+  <rect x="45" y="290" width="160" height="36" rx="8" fill="#1b2333"/>
+  <text x="60" y="313" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="13">🍔 Craft Burgers</text>
+
+  <!-- Main Content Grid -->
+  <rect x="240" y="100" width="530" height="175" rx="12" fill="url(#cardGrad)" stroke="#2e3b52" stroke-width="1.5"/>
+  <rect x="260" y="120" width="135" height="135" rx="10" fill="#2d3b55"/>
+  <!-- Food Icon Graphic -->
+  <circle cx="327" cy="187" r="45" fill="#f97316" fill-opacity="0.2"/>
+  <text x="327" y="198" font-size="42" text-anchor="middle">🍕</text>
+  
+  <text x="415" y="145" fill="#ffffff" font-family="system-ui, sans-serif" font-size="18" font-weight="bold">Truffle Mushroom Stone-Baked Pizza</text>
+  <text x="415" y="172" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="13">Handcrafted sourdough, wild truffles, buffalo mozzarella</text>
+  <text x="415" y="210" fill="#f97316" font-family="system-ui, sans-serif" font-size="20" font-weight="bold">$18.50</text>
+  <rect x="635" y="190" width="115" height="36" rx="8" fill="#f97316"/>
+  <text x="692" y="213" fill="#ffffff" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" text-anchor="middle">+ Add Cart</text>
+
+  <!-- Bottom Card 2 -->
+  <rect x="240" y="295" width="530" height="175" rx="12" fill="url(#cardGrad)" stroke="#2e3b52" stroke-width="1.5"/>
+  <rect x="260" y="315" width="135" height="135" rx="10" fill="#2d3b55"/>
+  <circle cx="327" cy="382" r="45" fill="#10b981" fill-opacity="0.2"/>
+  <text x="327" y="393" font-size="42" text-anchor="middle">🥗</text>
+
+  <text x="415" y="340" fill="#ffffff" font-family="system-ui, sans-serif" font-size="18" font-weight="bold">Mediterranean Quinoa Harvest Bowl</text>
+  <text x="415" y="367" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="13">Avocado, Persian cucumbers, Kalamata olives, citrus vinaigrette</text>
+  <text x="415" y="405" fill="#10b981" font-family="system-ui, sans-serif" font-size="20" font-weight="bold">$14.20</text>
+  <rect x="635" y="385" width="115" height="36" rx="8" fill="#10b981"/>
+  <text x="692" y="408" fill="#ffffff" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" text-anchor="middle">+ Add Cart</text>
+</svg>

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgVote" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0c1322"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="emeraldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#bgVote)" rx="16"/>
+  <!-- Top App Bar -->
+  <rect x="30" y="30" width="740" height="50" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+  <circle cx="60" cy="55" r="6" fill="#ef4444"/>
+  <circle cx="80" cy="55" r="6" fill="#f59e0b"/>
+  <circle cx="100" cy="55" r="6" fill="#10b981"/>
+  <text x="130" y="60" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="14" font-weight="600">🗳️ Digital Voting &amp; Ballot Auditing Portal (Integrity Verified)</text>
+
+  <!-- Left: Candidate Ballot -->
+  <rect x="30" y="100" width="370" height="370" rx="12" fill="#172033" stroke="#334155" stroke-width="1.5"/>
+  <text x="50" y="135" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="13" font-weight="bold">ACTIVE ELECTION BALLOT</text>
+
+  <rect x="45" y="155" width="340" height="85" rx="10" fill="#1e293b" stroke="#10b981" stroke-width="1.5"/>
+  <circle cx="85" cy="197" r="22" fill="#10b981" fill-opacity="0.2"/>
+  <text x="85" y="204" font-size="20" text-anchor="middle">🏛️</text>
+  <text x="125" y="185" fill="#ffffff" font-family="system-ui, sans-serif" font-size="15" font-weight="bold">Candidate Alpha</text>
+  <text x="125" y="205" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="12">Decentralized Governance Focus</text>
+  <circle cx="355" cy="197" r="9" fill="#10b981"/>
+
+  <rect x="45" y="255" width="340" height="85" rx="10" fill="#1e293b" stroke="#334155"/>
+  <circle cx="85" cy="297" r="22" fill="#3b82f6" fill-opacity="0.2"/>
+  <text x="85" y="304" font-size="20" text-anchor="middle">🎓</text>
+  <text x="125" y="285" fill="#ffffff" font-family="system-ui, sans-serif" font-size="15" font-weight="bold">Candidate Beta</text>
+  <text x="125" y="305" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="12">Campus Infrastructure Initiative</text>
+
+  <rect x="45" y="380" width="340" height="42" rx="10" fill="url(#emeraldGrad)"/>
+  <text x="215" y="406" fill="#ffffff" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" text-anchor="middle">✓ Cast Single Verified Ballot</text>
+
+  <!-- Right: Real-time Tallies -->
+  <rect x="420" y="100" width="350" height="370" rx="12" fill="#172033" stroke="#334155" stroke-width="1.5"/>
+  <text x="440" y="135" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="13" font-weight="bold">LIVE VOTE DISTRIBUTION</text>
+  
+  <text x="440" y="175" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="13">Candidate Alpha (62%)</text>
+  <rect x="440" y="185" width="310" height="18" rx="6" fill="#0f172a"/>
+  <rect x="440" y="185" width="192" height="18" rx="6" fill="#10b981"/>
+
+  <text x="440" y="240" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="13">Candidate Beta (38%)</text>
+  <rect x="440" y="250" width="310" height="18" rx="6" fill="#0f172a"/>
+  <rect x="440" y="250" width="118" height="18" rx="6" fill="#3b82f6"/>
+
+  <rect x="440" y="300" width="310" height="120" rx="10" fill="#111827" stroke="#334155"/>
+  <text x="455" y="330" fill="#94a3b8" font-family="monospace" font-size="12">Total Ballots Cast: 1,420</text>
+  <text x="455" y="355" fill="#10b981" font-family="monospace" font-size="12">Database State: ACID Synchronized</text>
+  <text x="455" y="380" fill="#94a3b8" font-family="monospace" font-size="12">Double-Vote Anomaly: 0 Detected</text>
+</svg>

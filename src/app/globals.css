@@ -1,26 +1,247 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-primary: var(--primary);
+  --color-primary-content: var(--primary-content);
+  --color-secondary: var(--secondary);
+  --color-secondary-content: var(--secondary-content);
+  --color-accent: var(--accent);
+  --color-accent-content: var(--accent-content);
+  --color-neutral: var(--neutral);
+  --color-neutral-content: var(--neutral-content);
+  --color-base-100: var(--base-100);
+  --color-base-200: var(--base-200);
+  --color-base-300: var(--base-300);
+  --color-base-content: var(--base-content);
+  --color-info: var(--info);
+  --color-info-content: var(--info-content);
+  --color-success: var(--success);
+  --color-success-content: var(--success-content);
+  --color-warning: var(--warning);
+  --color-warning-content: var(--warning-content);
+  --color-error: var(--error);
+  --color-error-content: var(--error-content);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Default / Perplexity Theme (FlyonUI semantic tokens) */
+:root,
+[data-theme="perplexity"] {
+  --base-100: #121316;
+  --base-200: #1b1d22;
+  --base-300: #262930;
+  --base-content: #f3f4f6;
+  --primary: #20b8cd;
+  --primary-content: #041f24;
+  --secondary: #10b981;
+  --secondary-content: #022013;
+  --accent: #6366f1;
+  --accent-content: #ffffff;
+  --neutral: #1a1c21;
+  --neutral-content: #e2e8f0;
+  --info: #38bdf8;
+  --info-content: #032030;
+  --success: #22c55e;
+  --success-content: #052e14;
+  --warning: #f59e0b;
+  --warning-content: #2d1802;
+  --error: #ef4444;
+  --error-content: #2e0505;
+}
+
+/* Shadcn Theme (FlyonUI semantic tokens) */
+[data-theme="shadcn"] {
+  --base-100: #09090b;
+  --base-200: #141417;
+  --base-300: #27272a;
+  --base-content: #fafafa;
+  --primary: #3b82f6;
+  --primary-content: #ffffff;
+  --secondary: #71717a;
+  --secondary-content: #ffffff;
+  --accent: #8b5cf6;
+  --accent-content: #ffffff;
+  --neutral: #18181b;
+  --neutral-content: #f4f4f5;
+  --info: #0284c7;
+  --info-content: #ffffff;
+  --success: #10b981;
+  --success-content: #ffffff;
+  --warning: #f59e0b;
+  --warning-content: #1e1302;
+  --error: #ef4444;
+  --error-content: #ffffff;
+}
+
+/* Ghibli Theme (FlyonUI semantic tokens) */
+[data-theme="ghibli"] {
+  --base-100: #141f1a;
+  --base-200: #1c2b24;
+  --base-300: #2b3f35;
+  --base-content: #f5edd6;
+  --primary: #4ade80;
+  --primary-content: #0d2818;
+  --secondary: #f59e0b;
+  --secondary-content: #291a03;
+  --accent: #fb7185;
+  --accent-content: #3b0914;
+  --neutral: #1e3028;
+  --neutral-content: #fef3c7;
+  --info: #38bdf8;
+  --info-content: #082635;
+  --success: #34d399;
+  --success-content: #062e1b;
+  --warning: #fbbf24;
+  --warning-content: #2a1b02;
+  --error: #f87171;
+  --error-content: #3b0a0a;
+}
+
+/* Light Mode: Perplexity Light */
+[data-theme="perplexity-light"] {
+  --base-100: #fbfbfc;
+  --base-200: #f1f3f6;
+  --base-300: #e2e5eb;
+  --base-content: #181a1f;
+  --primary: #0e8b9c;
+  --primary-content: #ffffff;
+  --secondary: #059669;
+  --secondary-content: #ffffff;
+  --accent: #4f46e5;
+  --accent-content: #ffffff;
+  --neutral: #e4e7ed;
+  --neutral-content: #1f2329;
+  --info: #0284c7;
+  --info-content: #ffffff;
+  --success: #16a34a;
+  --success-content: #ffffff;
+  --warning: #d97706;
+  --warning-content: #ffffff;
+  --error: #dc2626;
+  --error-content: #ffffff;
+}
+
+/* Light Mode: Shadcn Light */
+[data-theme="shadcn-light"] {
+  --base-100: #ffffff;
+  --base-200: #f4f4f5;
+  --base-300: #e4e4e7;
+  --base-content: #09090b;
+  --primary: #18181b;
+  --primary-content: #fafafa;
+  --secondary: #52525b;
+  --secondary-content: #ffffff;
+  --accent: #6366f1;
+  --accent-content: #ffffff;
+  --neutral: #f4f4f5;
+  --neutral-content: #18181b;
+  --info: #0284c7;
+  --info-content: #ffffff;
+  --success: #10b981;
+  --success-content: #ffffff;
+  --warning: #f59e0b;
+  --warning-content: #ffffff;
+  --error: #ef4444;
+  --error-content: #ffffff;
+}
+
+/* Light Mode: Ghibli Warm Light */
+[data-theme="ghibli-light"] {
+  --base-100: #faf7ee;
+  --base-200: #f0e8d5;
+  --base-300: #ded3bc;
+  --base-content: #2a3328;
+  --primary: #2d7a46;
+  --primary-content: #ffffff;
+  --secondary: #b45309;
+  --secondary-content: #ffffff;
+  --accent: #c0392b;
+  --accent-content: #ffffff;
+  --neutral: #e8ded0;
+  --neutral-content: #2a3328;
+  --info: #0284c7;
+  --info-content: #ffffff;
+  --success: #15803d;
+  --success-content: #ffffff;
+  --warning: #b45309;
+  --warning-content: #ffffff;
+  --error: #b91c1c;
+  --error-content: #ffffff;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--base-100);
+  color: var(--base-content);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: var(--font-sans, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  min-height: 100vh;
 }
+
+/* Custom interactive scrollbar using FlyonUI tokens */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--base-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--base-300);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Interactive animations and focus states */
+.focus-ring {
+  outline: none;
+}
+.focus-ring:focus-visible {
+  box-shadow: 0 0 0 2px var(--base-100), 0 0 0 4px var(--primary);
+}
+
+/* Dual-Row Continuous Marquee Animations */
+@keyframes marquee-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-right {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate-marquee-left {
+  display: flex;
+  width: max-content;
+  animation: marquee-left 45s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-right {
+  display: flex;
+  width: max-content;
+  animation: marquee-right 45s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-left:hover,
+.animate-marquee-right:hover {
+  animation-play-state: paused;
+}
+
