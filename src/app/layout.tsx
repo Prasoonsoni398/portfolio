@@ -25,10 +25,17 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      data-theme="perplexity"
+      data-theme="ghibli-light"
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased scroll-smooth`}
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var s=localStorage.getItem('portfolio-theme');if(s){document.documentElement.setAttribute('data-theme',s);}else{document.documentElement.setAttribute('data-theme','ghibli-light');}}catch(e){}})();`,
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col bg-base-100 text-base-content selection:bg-primary/20 selection:text-primary">
         <Navbar />
         <main className="flex-1">

@@ -3,35 +3,50 @@
 import { useEffect, useState } from "react";
 
 export type ThemeName =
+  | "ghibli-light"
+  | "ghibli"
   | "perplexity"
   | "shadcn"
-  | "ghibli"
   | "perplexity-light"
-  | "shadcn-light"
-  | "ghibli-light";
+  | "shadcn-light";
+
+const VALID_THEMES: ThemeName[] = [
+  "ghibli-light",
+  "ghibli",
+  "perplexity",
+  "shadcn",
+  "perplexity-light",
+  "shadcn-light",
+];
 
 export function useTheme() {
-  const [theme, setTheme] = useState<ThemeName>("perplexity");
+  const [theme, setTheme] = useState<ThemeName>("ghibli-light");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const saved = localStorage.getItem("portfolio-theme") as ThemeName;
-    if (saved) {
-      setTheme(saved);
-      document.documentElement.setAttribute("data-theme", saved);
+    try {
+      const saved = localStorage.getItem("portfolio-theme") as ThemeName;
+      if (saved && VALID_THEMES.includes(saved)) {
+        setTheme(saved);
+        document.documentElement.setAttribute("data-theme", saved);
+      } else {
+        setTheme("ghibli-light");
+        document.documentElement.setAttribute("data-theme", "ghibli-light");
+      }
+    } catch {
+      // ignore
     }
     setMounted(true);
   }, []);
 
-  useEffect(() => {
-    if (mounted) {
-      document.documentElement.setAttribute("data-theme", theme);
-      localStorage.setItem("portfolio-theme", theme);
-    }
-  }, [theme, mounted]);
-
   const changeTheme = (newTheme: ThemeName) => {
     setTheme(newTheme);
+    document.documentElement.setAttribute("data-theme", newTheme);
+    try {
+      localStorage.setItem("portfolio-theme", newTheme);
+    } catch {
+      // ignore
+    }
   };
 
   const isDark = !theme.endsWith("-light");

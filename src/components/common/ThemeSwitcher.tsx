@@ -8,17 +8,17 @@ export function ThemeSwitcher() {
   const { theme, isDark, changeTheme, toggleMode, mounted } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
 
-  const baseThemes: { id: "perplexity" | "shadcn" | "ghibli"; name: string; desc: string; dotColor: string }[] = [
+  const baseThemes: { id: "ghibli" | "perplexity" | "shadcn"; name: string; desc: string; dotColor: string }[] = [
+    { id: "ghibli", name: "Ghibli", desc: "Miyazaki Nature & Warmth", dotColor: "#4ade80" },
     { id: "perplexity", name: "Perplexity", desc: "Cyan/Teal AI Minimalist", dotColor: "#20b8cd" },
-    { id: "shadcn", name: "Shadcn", desc: "Zinc Slate Precision", dotColor: "#3b82f6" },
-    { id: "ghibli", name: "Ghibli", desc: "Miyazaki Nature & Warmth", dotColor: "#4ade80" }
+    { id: "shadcn", name: "Shadcn", desc: "Zinc Slate Precision", dotColor: "#3b82f6" }
   ];
 
   // Prevent SSR hydration mismatch when client has stored "ghibli" or other theme
-  const activeTheme = mounted ? theme : "perplexity";
-  const currentThemeBase = activeTheme.replace("-light", "") as "perplexity" | "shadcn" | "ghibli";
+  const activeTheme = mounted ? theme : "ghibli-light";
+  const currentThemeBase = activeTheme.replace("-light", "") as "ghibli" | "perplexity" | "shadcn";
 
-  const handleSelectTheme = (baseId: "perplexity" | "shadcn" | "ghibli") => {
+  const handleSelectTheme = (baseId: "ghibli" | "perplexity" | "shadcn") => {
     const newTheme = (isDark ? baseId : `${baseId}-light`) as ThemeName;
     changeTheme(newTheme);
     setIsOpen(false);
@@ -36,17 +36,17 @@ export function ThemeSwitcher() {
         >
           <Palette className="w-3.5 h-3.5 text-primary" />
           <span className="capitalize hidden sm:inline" suppressHydrationWarning>
-            {mounted ? currentThemeBase : "perplexity"}
+            {mounted ? currentThemeBase : "ghibli"}
           </span>
           <span
             className="w-2 h-2 rounded-full inline-block"
             style={{
               backgroundColor:
-                currentThemeBase === "perplexity"
+                currentThemeBase === "ghibli"
+                  ? "#4ade80"
+                  : currentThemeBase === "perplexity"
                   ? "#20b8cd"
-                  : currentThemeBase === "shadcn"
-                  ? "#3b82f6"
-                  : "#4ade80"
+                  : "#3b82f6"
             }}
           />
         </button>
@@ -61,7 +61,7 @@ export function ThemeSwitcher() {
           {mounted ? (
             isDark ? <Sun className="w-3.5 h-3.5 text-warning" /> : <Moon className="w-3.5 h-3.5 text-primary" />
           ) : (
-            <Sun className="w-3.5 h-3.5 text-warning" />
+            <Moon className="w-3.5 h-3.5 text-primary" />
           )}
         </button>
       </div>

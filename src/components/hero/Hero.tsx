@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Download, Mail } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "../common/Icons";
@@ -17,27 +16,10 @@ export function Hero() {
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           {/* Left Column: Headlines, Bio, CTAs */}
-          <div className="lg:col-span-5 flex flex-col gap-6 text-left">
+          <div className="lg:col-span-6 xl:col-span-7 flex flex-col gap-6 text-left">
             {/* Profile Intro Badge with photo */}
             <div className="flex flex-wrap items-center gap-3">
-              <div className="flex items-center gap-3 p-1.5 pr-4 rounded-full bg-base-200/80 border border-base-300 backdrop-blur-sm shadow-sm hover:border-primary/50 transition-colors">
-                <div className="relative w-9 h-9 rounded-full overflow-hidden border border-primary/50 shadow shrink-0">
-                  <Image
-                    src="/images/profile/prasoon.jpg"
-                    alt="Prasoon Soni"
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-bold text-base-content">Prasoon Soni</span>
-                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-success/15 text-success font-semibold border border-success/20">
-                    Trainee @ Raj Digital
-                  </span>
-                </div>
-              </div>
-
+              
               <div className="inline-flex items-center gap-2">
                 <span className="relative flex h-2.5 w-2.5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75"></span>
@@ -119,8 +101,10 @@ export function Hero() {
           </div>
 
           {/* Right Column: Interactive Terminal / Playground */}
-          <div className="lg:col-span-7 w-full">
-            <InteractivePlayground />
+          <div className="lg:col-span-6 xl:col-span-5 w-full flex justify-center lg:justify-end">
+            <div className="w-full max-w-[480px] xl:max-w-[500px]">
+              <InteractivePlayground />
+            </div>
           </div>
         </div>
       </Container>
