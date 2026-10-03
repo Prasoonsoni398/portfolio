@@ -17,7 +17,7 @@ export function Hero() {
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           {/* Left Column: Headlines, Bio, CTAs */}
-          <div className="lg:col-span-7 flex flex-col gap-6 text-left">
+          <div className="lg:col-span-5 flex flex-col gap-6 text-left">
             {/* Profile Intro Badge with photo */}
             <div className="flex flex-wrap items-center gap-3">
               <div className="flex items-center gap-3 p-1.5 pr-4 rounded-full bg-base-200/80 border border-base-300 backdrop-blur-sm shadow-sm hover:border-primary/50 transition-colors">
@@ -119,7 +119,7 @@ export function Hero() {
           </div>
 
           {/* Right Column: Interactive Terminal / Playground */}
-          <div className="lg:col-span-5 w-full">
+          <div className="lg:col-span-7 w-full">
             <InteractivePlayground />
           </div>
         </div>

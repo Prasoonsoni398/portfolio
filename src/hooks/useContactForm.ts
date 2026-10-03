@@ -43,37 +43,50 @@ export function useContactForm() {
     setStatus({ submitting: true, success: false });
 
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData)
-      });
+      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "service_fp638bb";
+      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "template_zxr38k5";
+      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 
-      if (!response.ok) {
-        throw new Error("Failed to send message");
+      if (!publicKey) {
+        throw new Error("EmailJS Public Key is missing. Please add your NEXT_PUBLIC_EMAILJS_PUBLIC_KEY in .env");
       }
 
-      setStatus({ submitting: false, success: true });
+      // Send directly via client-side EmailJS SDK (No backend required)
+      const emailjs = (await import("@emailjs/browser")).default;
+      const currentTime = new Date().toLocaleString("en-US", {
+        timeZone: "Asia/Kolkata",
+        dateStyle: "medium",
+        timeStyle: "short"
+      });
+
+      await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject || "New Portfolio Inquiry",
+          message: formData.message,
+          time: currentTime
+        },
+        publicKey
+      );
+
+      setStatus({ submitting: false, success: true, error: undefined });
       setFormData(initialData);
 
-      // Trigger celebratory confetti for interactive polish
+      // Trigger celebratory confetti for interactive feedback
       confetti({
         particleCount: 80,
         spread: 70,
         origin: { y: 0.6 }
       });
-    } catch {
-      // Graceful fallback simulation so user can always succeed or email directly
+    } catch (err: unknown) {
+      console.error("EmailJS submission error:", err);
       setStatus({
         submitting: false,
-        success: true,
-        error: undefined
-      });
-      setFormData(initialData);
-      confetti({
-        particleCount: 60,
-        spread: 60,
-        origin: { y: 0.6 }
+        success: false,
+        error: err instanceof Error ? err.message : "Failed to dispatch email. Please check your credentials."
       });
     }
   };

@@ -214,6 +214,14 @@ export function ContactSection() {
                   )}
                 </div>
 
+                {/* Error Banner */}
+                {status.error && (
+                  <div className="p-3.5 rounded-xl bg-error/10 border border-error/30 text-error text-xs flex items-center gap-2.5">
+                    <AlertCircle className="w-4 h-4 shrink-0" />
+                    <span>{status.error}</span>
+                  </div>
+                )}
+
                 {/* Submit button */}
                 <button
                   type="submit"

@@ -5,7 +5,7 @@ import { Palette, Moon, Sun, Sparkles, Check } from "lucide-react";
 import { useTheme, ThemeName } from "@/hooks/useTheme";
 
 export function ThemeSwitcher() {
-  const { theme, isDark, changeTheme, toggleMode } = useTheme();
+  const { theme, isDark, changeTheme, toggleMode, mounted } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
 
   const baseThemes: { id: "perplexity" | "shadcn" | "ghibli"; name: string; desc: string; dotColor: string }[] = [
@@ -14,7 +14,9 @@ export function ThemeSwitcher() {
     { id: "ghibli", name: "Ghibli", desc: "Miyazaki Nature & Warmth", dotColor: "#4ade80" }
   ];
 
-  const currentThemeBase = theme.replace("-light", "") as "perplexity" | "shadcn" | "ghibli";
+  // Prevent SSR hydration mismatch when client has stored "ghibli" or other theme
+  const activeTheme = mounted ? theme : "perplexity";
+  const currentThemeBase = activeTheme.replace("-light", "") as "perplexity" | "shadcn" | "ghibli";
 
   const handleSelectTheme = (baseId: "perplexity" | "shadcn" | "ghibli") => {
     const newTheme = (isDark ? baseId : `${baseId}-light`) as ThemeName;
@@ -23,17 +25,19 @@ export function ThemeSwitcher() {
   };
 
   return (
-    <div className="relative inline-block text-left">
+    <div className="relative inline-block text-left" suppressHydrationWarning>
       <div className="flex items-center gap-1.5 p-1 rounded-xl bg-base-200 border border-base-300">
         {/* Dropdown Toggle */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold bg-base-100 hover:bg-base-300 text-base-content border border-base-300 transition-all active:scale-95"
+          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold bg-base-100 hover:bg-base-300 text-base-content border border-base-300 transition-all active:scale-95 cursor-pointer"
           title="Switch Portfolio Theme"
           aria-label="Theme selector"
         >
           <Palette className="w-3.5 h-3.5 text-primary" />
-          <span className="capitalize hidden sm:inline">{currentThemeBase}</span>
+          <span className="capitalize hidden sm:inline" suppressHydrationWarning>
+            {mounted ? currentThemeBase : "perplexity"}
+          </span>
           <span
             className="w-2 h-2 rounded-full inline-block"
             style={{
@@ -50,11 +54,15 @@ export function ThemeSwitcher() {
         {/* Light / Dark Mode Quick Toggle */}
         <button
           onClick={toggleMode}
-          className="p-1.5 rounded-lg text-base-content hover:bg-base-300 hover:text-primary transition-all active:scale-90"
+          className="p-1.5 rounded-lg text-base-content hover:bg-base-300 hover:text-primary transition-all active:scale-90 cursor-pointer"
           title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
           aria-label="Toggle light or dark mode"
         >
-          {isDark ? <Sun className="w-3.5 h-3.5 text-warning" /> : <Moon className="w-3.5 h-3.5 text-primary" />}
+          {mounted ? (
+            isDark ? <Sun className="w-3.5 h-3.5 text-warning" /> : <Moon className="w-3.5 h-3.5 text-primary" />
+          ) : (
+            <Sun className="w-3.5 h-3.5 text-warning" />
+          )}
         </button>
       </div>
 
@@ -80,7 +88,7 @@ export function ThemeSwitcher() {
                   <button
                     key={t.id}
                     onClick={() => handleSelectTheme(t.id)}
-                    className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-left text-xs transition-colors ${
+                    className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-left text-xs transition-colors cursor-pointer ${
                       isActive
                         ? "bg-primary/15 text-primary font-bold border border-primary/20"
                         : "hover:bg-base-300/80 text-base-content"

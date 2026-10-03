@@ -11,18 +11,24 @@ export type ThemeName =
   | "ghibli-light";
 
 export function useTheme() {
-  const [theme, setTheme] = useState<ThemeName>(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("portfolio-theme") as ThemeName;
-      if (saved) return saved;
-    }
-    return "perplexity";
-  });
+  const [theme, setTheme] = useState<ThemeName>("perplexity");
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("portfolio-theme", theme);
-  }, [theme]);
+    const saved = localStorage.getItem("portfolio-theme") as ThemeName;
+    if (saved) {
+      setTheme(saved);
+      document.documentElement.setAttribute("data-theme", saved);
+    }
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (mounted) {
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.setItem("portfolio-theme", theme);
+    }
+  }, [theme, mounted]);
 
   const changeTheme = (newTheme: ThemeName) => {
     setTheme(newTheme);
@@ -48,6 +54,7 @@ export function useTheme() {
     theme,
     isDark,
     changeTheme,
-    toggleMode
+    toggleMode,
+    mounted
   };
 }
