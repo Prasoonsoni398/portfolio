@@ -55,6 +55,7 @@ export default function AdminProjectsPage() {
   const [isEditing, setIsEditing] = useState(false);
   const [featuresText, setFeaturesText] = useState("");
   const [techText, setTechText] = useState("");
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [saving, setSaving] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
 
@@ -85,6 +86,7 @@ export default function AdminProjectsPage() {
     });
     setFeaturesText("");
     setTechText("React, Next.js, TypeScript");
+    setImageFile(null);
     setModalOpen(true);
   }
 
@@ -93,6 +95,7 @@ export default function AdminProjectsPage() {
     setEditingProject(project);
     setFeaturesText(project.features ? project.features.join("\n") : "");
     setTechText(project.technologies ? project.technologies.join(", ") : "");
+    setImageFile(null);
     setModalOpen(true);
   }
 
@@ -100,8 +103,35 @@ export default function AdminProjectsPage() {
     e.preventDefault();
     setSaving(true);
 
+    // If a new image file was selected, upload it first
+    let imagePath = editingProject.image;
+    if (imageFile) {
+      const form = new FormData();
+      form.append("image", imageFile);
+      try {
+        const uploadRes = await fetch("/api/admin/projects/upload", {
+          method: "POST",
+          body: form
+        });
+        const uploadData = await uploadRes.json();
+        if (uploadData.success) {
+          imagePath = uploadData.path;
+        } else {
+          alert(uploadData.error || "Image upload failed");
+          setSaving(false);
+          return;
+        }
+      } catch (err) {
+        console.error("Image upload error:", err);
+        alert("Image upload error");
+        setSaving(false);
+        return;
+      }
+    }
+
     const payload: Project = {
       ...editingProject,
+      image: imagePath,
       slug:
         editingProject.slug ||
         editingProject.title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
@@ -446,6 +476,24 @@ export default function AdminProjectsPage() {
                     placeholder="e.g. Cravings"
                     className="w-full p-2.5 bg-base-100 border border-base-300 rounded-xl text-xs text-base-content focus:outline-none focus:border-primary"
                   />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-base-content/70 uppercase tracking-wider mb-1">
+                    Project Image
+                  </label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0] || null;
+                      setImageFile(file);
+                    }}
+                    className="w-full p-2.5 bg-base-100 border border-base-300 rounded-xl text-xs"
+                  />
+                  {/* Show preview if an existing image exists */}
+                  {editingProject.image && !imageFile && (
+                    <img src={editingProject.image} alt="Current" className="mt-2 h-24 object-contain" />
+                  )}
                 </div>
 
                 <div>
