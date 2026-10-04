@@ -16,6 +16,7 @@ import {
 import { Project } from "@/types/project";
 import { GithubIcon } from "@/components/common/Icons";
 import { AdminHeaderPortal } from "@/components/admin/AdminHeaderPortal";
+import { Dropdown } from "@/components/common/Dropdown";
 
 const CATEGORIES: Project["category"][] = [
   "Full Stack",
@@ -211,10 +212,10 @@ export default function AdminProjectsPage() {
 
       {/* Top Filter Tabs in Top Header Highlighted Part */}
       <AdminHeaderPortal>
-        <nav className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar -mb-px" aria-label="Project Categories">
+        <nav className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto overflow-y-hidden no-scrollbar h-full" aria-label="Project Categories">
           <button
             onClick={() => setSelectedCategory("all")}
-            className={`pb-3.5 pt-1 px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 cursor-pointer ${
+            className={`h-full px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 cursor-pointer ${
               selectedCategory === "all"
                 ? "border-primary text-primary"
                 : "border-transparent text-base-content/60 hover:text-base-content hover:border-base-300"
@@ -232,7 +233,7 @@ export default function AdminProjectsPage() {
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`pb-3.5 pt-1 px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 cursor-pointer ${
+                className={`h-full px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 cursor-pointer ${
                   isSelected
                     ? "border-primary text-primary"
                     : "border-transparent text-base-content/60 hover:text-base-content hover:border-base-300"
@@ -466,25 +467,20 @@ export default function AdminProjectsPage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-base-content/70 uppercase tracking-wider mb-1">
-                    Category *
-                  </label>
-                  <select
+                  <Dropdown
+                    label="Category *"
                     value={editingProject.category}
-                    onChange={(e) =>
+                    onChange={(val) =>
                       setEditingProject({
                         ...editingProject,
-                        category: e.target.value as Project["category"]
+                        category: val as Project["category"]
                       })
                     }
-                    className="w-full p-2.5 bg-base-100 border border-base-300 rounded-xl text-xs text-base-content focus:outline-none focus:border-primary"
-                  >
-                    {CATEGORIES.map((c) => (
-                      <option key={c} value={c} className="bg-base-200">
-                        {c}
-                      </option>
-                    ))}
-                  </select>
+                    options={CATEGORIES.map((c) => ({
+                      value: c,
+                      label: c
+                    }))}
+                  />
                 </div>
 
                 <div>

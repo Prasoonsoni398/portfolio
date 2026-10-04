@@ -16,18 +16,7 @@ export default function ProjectsPage() {
   const projects = db.getProjects();
 
   return (
-    <div className="pt-20">
-      <div className="py-12 bg-base-200/40 border-b border-base-300">
-        <Container>
-          <h1 className="text-3xl sm:text-4xl font-black text-base-content tracking-tight">
-            Projects Portfolio
-          </h1>
-          <p className="text-sm sm:text-base text-base-content/70 mt-2 max-w-xl">
-            Interactive showcase of full-stack web applications, real-time engines, and frontend developer tooling.
-          </p>
-        </Container>
-      </div>
-
+    <div className="">
       <ProjectsSection projects={projects} />
     </div>
   );

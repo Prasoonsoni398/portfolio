@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard,
+  Home,
   Inbox,
   FolderGit2,
   Wrench,
@@ -43,6 +44,7 @@ export function AdminSidebar({
 
   const navItems = [
     { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
+    { label: "Hero (Home)", href: "/admin/hero", icon: Home },
     {
       label: "Inquiries & Leads",
       href: "/admin/inquiries",

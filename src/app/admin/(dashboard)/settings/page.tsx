@@ -99,9 +99,10 @@ export default function AdminSettingsPage() {
 
       {/* Top Filter Tabs in Top Header Highlighted Part */}
       <AdminHeaderPortal>
-        <nav className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar -mb-px" aria-label="Settings Sections">
+        <nav className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto overflow-y-hidden no-scrollbar h-full" aria-label="Settings Sections">
           {[
             { id: "all", label: "All Settings", icon: Settings },
+            { id: "hero", label: "Hero (Home)", icon: Sparkles },
             { id: "identity", label: "Identity & Bio", icon: User },
             { id: "social", label: "Social & Resume", icon: Share2 },
             { id: "security", label: "Security & Env", icon: Shield }
@@ -113,7 +114,7 @@ export default function AdminSettingsPage() {
                 key={tab.id}
                 type="button"
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`pb-3.5 pt-1 px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 cursor-pointer ${
+                className={`h-full px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 cursor-pointer ${
                   isSelected
                     ? "border-primary text-primary"
                     : "border-transparent text-base-content/60 hover:text-base-content hover:border-base-300"
@@ -128,6 +129,128 @@ export default function AdminSettingsPage() {
       </AdminHeaderPortal>
 
       <form onSubmit={handleSave} className="space-y-6">
+        {/* Hero (Home) Section Customization */}
+        {(activeTab === "all" || activeTab === "hero") && (
+          <div className="bg-base-200 border border-base-300 rounded-2xl p-6 space-y-4">
+            <div className="flex items-center gap-2 pb-3 border-b border-base-300/50">
+              <Sparkles className="w-4 h-4 text-primary" />
+              <h2 className="text-sm font-bold text-base-content uppercase tracking-wider">
+                Hero (Home) Section Customization
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-semibold text-base-content/70 uppercase tracking-wider mb-1">
+                  Hero Greeting
+                </label>
+                <input
+                  type="text"
+                  value={profile.heroGreeting || ""}
+                  onChange={(e) => setProfile({ ...profile, heroGreeting: e.target.value })}
+                  placeholder="e.g. Hello World, my name is"
+                  className="w-full p-2.5 bg-base-100 border border-base-300 rounded-xl text-xs text-base-content focus:outline-none focus:border-primary"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-base-content/70 uppercase tracking-wider mb-1">
+                  Headline / Display Name
+                </label>
+                <input
+                  type="text"
+                  value={profile.name}
+                  onChange={(e) => setProfile({ ...profile, name: e.target.value })}
+                  placeholder="e.g. Prasoon Soni"
+                  className="w-full p-2.5 bg-base-100 border border-base-300 rounded-xl text-xs text-base-content focus:outline-none focus:border-primary"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-semibold text-base-content/70 uppercase tracking-wider mb-1">
+                  Hero Subtitle / Tagline
+                </label>
+                <input
+                  type="text"
+                  value={profile.heroTagline || profile.title || ""}
+                  onChange={(e) => setProfile({ ...profile, heroTagline: e.target.value })}
+                  placeholder="e.g. Frontend Developer & Full-Stack Engineer"
+                  className="w-full p-2.5 bg-base-100 border border-base-300 rounded-xl text-xs text-base-content focus:outline-none focus:border-primary"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-base-content/70 uppercase tracking-wider mb-1">
+                  Availability Badge Text
+                </label>
+                <input
+                  type="text"
+                  value={profile.heroStatusText || ""}
+                  onChange={(e) => setProfile({ ...profile, heroStatusText: e.target.value })}
+                  placeholder="e.g. Available for Opportunities"
+                  className="w-full p-2.5 bg-base-100 border border-base-300 rounded-xl text-xs text-base-content focus:outline-none focus:border-primary"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-base-content/70 uppercase tracking-wider mb-1">
+                Hero Description Paragraph
+              </label>
+              <textarea
+                rows={3}
+                value={profile.heroDescription || profile.bio || ""}
+                onChange={(e) => setProfile({ ...profile, heroDescription: e.target.value })}
+                placeholder="Introduction paragraph displayed prominently in the hero section..."
+                className="w-full p-2.5 bg-base-100 border border-base-300 rounded-xl text-xs text-base-content focus:outline-none focus:border-primary"
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label className="block text-xs font-semibold text-base-content/70 uppercase tracking-wider mb-1">
+                  Primary CTA Button Text
+                </label>
+                <input
+                  type="text"
+                  value={profile.heroPrimaryCtaText || ""}
+                  onChange={(e) => setProfile({ ...profile, heroPrimaryCtaText: e.target.value })}
+                  placeholder="e.g. View My Work"
+                  className="w-full p-2.5 bg-base-100 border border-base-300 rounded-xl text-xs text-base-content focus:outline-none focus:border-primary"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-base-content/70 uppercase tracking-wider mb-1">
+                  Primary CTA Button Link
+                </label>
+                <input
+                  type="text"
+                  value={profile.heroPrimaryCtaLink || ""}
+                  onChange={(e) => setProfile({ ...profile, heroPrimaryCtaLink: e.target.value })}
+                  placeholder="e.g. #projects"
+                  className="w-full p-2.5 bg-base-100 border border-base-300 rounded-xl text-xs text-base-content focus:outline-none focus:border-primary"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-base-content/70 uppercase tracking-wider mb-1">
+                  Secondary CTA Button Text
+                </label>
+                <input
+                  type="text"
+                  value={profile.heroSecondaryCtaText || ""}
+                  onChange={(e) => setProfile({ ...profile, heroSecondaryCtaText: e.target.value })}
+                  placeholder="e.g. Download Resume"
+                  className="w-full p-2.5 bg-base-100 border border-base-300 rounded-xl text-xs text-base-content focus:outline-none focus:border-primary"
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Personal Bio & Identity */}
         {(activeTab === "all" || activeTab === "identity") && (
         <div className="bg-base-200 border border-base-300 rounded-2xl p-6 space-y-4">

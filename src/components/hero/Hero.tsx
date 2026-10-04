@@ -16,7 +16,7 @@ export function Hero({ profile }: HeroProps) {
   const name = profile?.name || SITE_CONFIG.name;
   const title = profile?.heroTagline || profile?.title || SITE_CONFIG.title;
   const greeting = profile?.heroGreeting || "Hello World, my name is";
-  const description = profile?.heroDescription || profile?.bio || SITE_CONFIG.about;
+  const description = profile?.heroDescription || profile?.bio || SITE_CONFIG.bio;
   const statusText = profile?.heroStatusText || "Available for Opportunities";
   const isAvailable = profile?.availableForHire ?? true;
   const primaryCtaText = profile?.heroPrimaryCtaText || "View My Work";

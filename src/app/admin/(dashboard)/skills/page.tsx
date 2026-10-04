@@ -7,10 +7,12 @@ import {
   CheckCircle,
   RefreshCw,
   X,
-  Search
+  Search,
+  Pencil
 } from "lucide-react";
 import { SkillGroup, SkillItem } from "@/types/skill";
 import { AdminHeaderPortal } from "@/components/admin/AdminHeaderPortal";
+import { Dropdown } from "@/components/common/Dropdown";
 
 export default function AdminSkillsPage() {
   const [skillGroups, setSkillGroups] = useState<SkillGroup[]>([]);
@@ -20,8 +22,10 @@ export default function AdminSkillsPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [search, setSearch] = useState("");
 
-  // Modal for adding a skill
+  // Modal for adding/editing a skill
   const [modalOpen, setModalOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [originalSkillName, setOriginalSkillName] = useState("");
   const [targetCategory, setTargetCategory] = useState<string>("");
   const [newSkillName, setNewSkillName] = useState("");
   const [newSkillLevel, setNewSkillLevel] = useState<"Proficient" | "Advanced" | "Intermediate">("Advanced");
@@ -69,6 +73,8 @@ export default function AdminSkillsPage() {
   }
 
   function handleOpenAddSkill(category?: string) {
+    setIsEditing(false);
+    setOriginalSkillName("");
     const cat = category || (selectedCategory !== "all" ? selectedCategory : skillGroups[0]?.category || "Frontend");
     setTargetCategory(cat);
     setNewSkillName("");
@@ -78,11 +84,22 @@ export default function AdminSkillsPage() {
     setModalOpen(true);
   }
 
+  function handleOpenEditSkill(category: string, skill: SkillItem) {
+    setIsEditing(true);
+    setOriginalSkillName(skill.name);
+    setTargetCategory(category);
+    setNewSkillName(skill.name);
+    setNewSkillLevel(skill.level);
+    setNewSkillDesc(skill.description);
+    setNewSkillApplied(skill.appliedIn ? skill.appliedIn.join(", ") : "");
+    setModalOpen(true);
+  }
+
   function handleSaveSkill(e: React.FormEvent) {
     e.preventDefault();
     if (!newSkillName.trim()) return;
 
-    const newSkill: SkillItem = {
+    const skillPayload: SkillItem = {
       name: newSkillName.trim(),
       level: newSkillLevel,
       description: newSkillDesc.trim(),
@@ -92,15 +109,43 @@ export default function AdminSkillsPage() {
         .filter(Boolean)
     };
 
-    const updated = skillGroups.map((group) => {
-      if (group.category === targetCategory) {
-        return {
-          ...group,
-          skills: [...group.skills, newSkill]
-        };
-      }
-      return group;
-    });
+    let updated: SkillGroup[];
+
+    if (isEditing) {
+      updated = skillGroups.map((group) => {
+        if (group.category === targetCategory) {
+          const exists = group.skills.some((s) => s.name === originalSkillName);
+          if (exists) {
+            return {
+              ...group,
+              skills: group.skills.map((s) => (s.name === originalSkillName ? skillPayload : s))
+            };
+          } else {
+            // Skill moved to this category
+            return {
+              ...group,
+              skills: [...group.skills, skillPayload]
+            };
+          }
+        } else {
+          // Remove from old category if category was changed
+          return {
+            ...group,
+            skills: group.skills.filter((s) => s.name !== originalSkillName)
+          };
+        }
+      });
+    } else {
+      updated = skillGroups.map((group) => {
+        if (group.category === targetCategory) {
+          return {
+            ...group,
+            skills: [...group.skills, skillPayload]
+          };
+        }
+        return group;
+      });
+    }
 
     persistSkills(updated);
     setModalOpen(false);
@@ -129,14 +174,21 @@ export default function AdminSkillsPage() {
 
   const totalSkillsCount = skillGroups.reduce((acc, g) => acc + g.skills.length, 0);
 
-  const displayedGroups = skillGroups
-    .filter((g) => selectedCategory === "all" || g.category === selectedCategory)
-    .map((g) => ({
-      ...g,
-      skills: g.skills.filter((s) =>
-        search ? s.name.toLowerCase().includes(search.toLowerCase()) || s.description.toLowerCase().includes(search.toLowerCase()) : true
-      )
-    }));
+  // Flatten skills with category info for unified single-section rendering
+  const allSkills = skillGroups.flatMap((group) =>
+    group.skills.map((skill) => ({ ...skill, category: group.category }))
+  );
+
+  const filteredSkills = allSkills.filter((skill) => {
+    const matchesCategory =
+      selectedCategory === "all" || skill.category === selectedCategory;
+    const matchesSearch =
+      !search ||
+      skill.name.toLowerCase().includes(search.toLowerCase()) ||
+      skill.description.toLowerCase().includes(search.toLowerCase()) ||
+      skill.category.toLowerCase().includes(search.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
   return (
     <div className="space-y-6">
@@ -150,10 +202,10 @@ export default function AdminSkillsPage() {
 
       {/* Top Filter Tabs in Top Header Highlighted Part */}
       <AdminHeaderPortal>
-        <nav className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar -mb-px" aria-label="Skill Categories">
+        <nav className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto overflow-y-hidden no-scrollbar h-full" aria-label="Skill Categories">
           <button
             onClick={() => setSelectedCategory("all")}
-            className={`pb-3.5 pt-1 px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 cursor-pointer ${
+            className={`h-full px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 cursor-pointer ${
               selectedCategory === "all"
                 ? "border-primary text-primary"
                 : "border-transparent text-base-content/60 hover:text-base-content hover:border-base-300"
@@ -171,7 +223,7 @@ export default function AdminSkillsPage() {
               <button
                 key={group.category}
                 onClick={() => setSelectedCategory(group.category)}
-                className={`pb-3.5 pt-1 px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 cursor-pointer ${
+                className={`h-full px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 cursor-pointer ${
                   isSelected
                     ? "border-primary text-primary"
                     : "border-transparent text-base-content/60 hover:text-base-content hover:border-base-300"
@@ -204,7 +256,7 @@ export default function AdminSkillsPage() {
 
         <div className="flex items-center gap-2 self-end sm:self-auto flex-shrink-0">
           <button
-            onClick={() => handleOpenAddSkill()}
+            onClick={() => handleOpenAddSkill(selectedCategory === "all" ? "Frontend" : selectedCategory)}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary hover:bg-primary/90 text-primary-content font-semibold text-xs shadow-sm transition-all cursor-pointer"
           >
             <Plus className="w-4 h-4" />
@@ -220,108 +272,91 @@ export default function AdminSkillsPage() {
         </div>
       </div>
 
-      {/* Skills Groups List */}
+      {/* Skills Single Section Grid (No Wrapper Box) */}
       {loading ? (
         <div className="p-12 text-center text-xs text-base-content/50">
           <RefreshCw className="w-6 h-6 animate-spin mx-auto mb-2 text-primary" />
           Loading skills...
         </div>
-      ) : displayedGroups.length === 0 ? (
+      ) : filteredSkills.length === 0 ? (
         <div className="p-12 text-center border border-dashed border-base-300 rounded-2xl bg-base-200">
           <p className="text-sm font-semibold text-base-content">No skills found</p>
-          <p className="text-xs text-base-content/60 mt-1">Try adjusting your search query.</p>
+          <p className="text-xs text-base-content/60 mt-1">Try adjusting your search query or category filter.</p>
         </div>
       ) : (
-        <div className="space-y-6">
-          {displayedGroups.map((group) => (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4  gap-3">
+          {filteredSkills.map((skill) => (
             <div
-              key={group.category}
-              className="bg-base-200 border border-base-300 rounded-2xl p-6 space-y-4"
+              key={`${skill.category}-${skill.name}`}
+              className="p-3.5 rounded-xl bg-base-200 border border-base-300 hover:border-primary/40 transition-all shadow-sm flex flex-col justify-between group hover:shadow-md"
             >
-              {/* Category Header */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-base-300/50">
-                <div className="flex items-center gap-2">
-                  <h2 className="text-sm font-bold text-base-content">{group.category}</h2>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
-                    {group.skills.length} skills
+              <div>
+                <div className="flex items-center justify-between gap-1.5 mb-1.5">
+                  <span className="font-bold text-xs text-base-content truncate" title={skill.name}>
+                    {skill.name}
                   </span>
-                </div>
-
-                <button
-                  onClick={() => handleOpenAddSkill(group.category)}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-primary/10 hover:bg-primary/20 text-primary border border-primary/30 text-xs font-semibold transition-colors self-start sm:self-auto cursor-pointer"
-                >
-                  <Plus className="w-3.5 h-3.5" />
-                  <span>Add to {group.category}</span>
-                </button>
-              </div>
-
-              {/* Skills Badges Grid */}
-              {group.skills.length === 0 ? (
-                <p className="text-xs text-base-content/50 py-4">No matching skills in this category.</p>
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                  {group.skills.map((skill) => (
-                    <div
-                      key={skill.name}
-                      className="p-3.5 rounded-xl bg-base-100 border border-base-300 hover:border-primary/40 transition-colors flex flex-col justify-between group"
+                  <div className="flex items-center gap-1 flex-shrink-0">
+                    <span
+                    className={`text-[9px] uppercase font-bold px-2 py-0.5 rounded-full ${
+                        skill.level === "Advanced"
+                          ? "bg-primary/15 text-primary border border-primary/30"
+                          : skill.level === "Proficient"
+                          ? "bg-secondary/15 text-secondary border border-secondary/30"
+                          : "bg-base-300 text-base-content/70 border border-base-300"
+                      }`}
                     >
-                      <div>
-                        <div className="flex items-center justify-between gap-2 mb-1.5">
-                          <span className="font-bold text-xs text-base-content">{skill.name}</span>
-                          <span
-                            className={`text-[9px] uppercase font-bold px-1.5 py-0.5 rounded ${
-                              skill.level === "Advanced"
-                                ? "bg-primary/15 text-primary border border-primary/30"
-                                : skill.level === "Proficient"
-                                ? "bg-secondary/15 text-secondary border border-secondary/30"
-                                : "bg-base-300 text-base-content/70 border border-base-300"
-                            }`}
-                          >
-                            {skill.level}
-                          </span>
-                        </div>
-                        <p className="text-[11px] text-base-content/70 line-clamp-2">{skill.description}</p>
-
-                        {skill.appliedIn && skill.appliedIn.length > 0 && (
-                          <div className="flex flex-wrap gap-1 mt-2">
-                            {skill.appliedIn.map((app) => (
-                              <span
-                                key={app}
-                                className="text-[9px] px-1.5 py-0.5 rounded bg-base-200 text-base-content/70 border border-base-300"
-                              >
-                                {app}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-
-                      <div className="mt-3 pt-2 border-t border-base-300/50 flex justify-end">
-                        <button
-                          onClick={() => handleDeleteSkill(group.category, skill.name)}
-                          className="text-base-content/40 hover:text-error p-1 rounded transition-colors cursor-pointer"
-                          title="Delete Skill"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
-                    </div>
-                  ))}
+                      {skill.level}
+                    </span>
+                    <button
+                      onClick={() => handleOpenEditSkill(skill.category, skill)}
+                      className="opacity-0 group-hover:opacity-100 text-base-content/40 hover:text-primary p-0.5 rounded transition-all cursor-pointer"
+                      title="Edit Skill"
+                    >
+                      <Pencil className="w-3 h-3" />
+                    </button>
+                    <button
+                      onClick={() => handleDeleteSkill(skill.category, skill.name)}
+                      className="opacity-0 group-hover:opacity-100 text-base-content/40 hover:text-error p-0.5 rounded transition-all cursor-pointer"
+                      title="Delete Skill"
+                    >
+                      <Trash2 className="w-3 h-3" />
+                    </button>
+                  </div>
                 </div>
-              )}
+
+                {selectedCategory === "all" && (
+                  <span className="inline-block text-[10px] font-mono px-2 py-0.5 rounded-md bg-base-100 text-base-content/70 border border-base-300 mb-2">
+                    {skill.category}
+                  </span>
+                )}
+
+                <p className="text-xs text-base-content/75 line-clamp-2 leading-relaxed">{skill.description}</p>
+
+                {skill.appliedIn && skill.appliedIn.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5 mt-3">
+                    {skill.appliedIn.map((app) => (
+                      <span
+                        key={app}
+                        className="text-[10px] px-2 py-0.5 rounded-md bg-base-100 text-base-content/70 border border-base-300"
+                      >
+                        {app}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           ))}
         </div>
       )}
 
-      {/* Add Skill Modal */}
+      {/* Add / Edit Skill Modal */}
       {modalOpen && (
         <div className="fixed inset-0 z-50 bg-base-content/50 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="bg-base-200 border border-base-300 rounded-2xl w-full max-w-md p-6 shadow-2xl space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-base-300">
               <h3 className="font-bold text-sm text-base-content">
-                Add Skill to &quot;{targetCategory}&quot;
+                {isEditing ? `Edit Skill: ${originalSkillName}` : `Add Skill to "${targetCategory}"`}
               </h3>
               <button
                 onClick={() => setModalOpen(false)}
@@ -333,20 +368,15 @@ export default function AdminSkillsPage() {
 
             <form onSubmit={handleSaveSkill} className="space-y-3">
               <div>
-                <label className="block text-[11px] font-semibold uppercase text-base-content/70 mb-1">
-                  Category *
-                </label>
-                <select
+                <Dropdown
+                  label="Category *"
                   value={targetCategory}
-                  onChange={(e) => setTargetCategory(e.target.value)}
-                  className="w-full p-2.5 bg-base-100 border border-base-300 rounded-xl text-xs text-base-content focus:outline-none focus:border-primary"
-                >
-                  {skillGroups.map((g) => (
-                    <option key={g.category} value={g.category} className="bg-base-200">
-                      {g.category}
-                    </option>
-                  ))}
-                </select>
+                  onChange={(val) => setTargetCategory(val)}
+                  options={skillGroups.map((g) => ({
+                    value: g.category,
+                    label: g.category
+                  }))}
+                />
               </div>
 
               <div>
@@ -364,28 +394,16 @@ export default function AdminSkillsPage() {
               </div>
 
               <div>
-                <label className="block text-[11px] font-semibold uppercase text-base-content/70 mb-1">
-                  Proficiency Level *
-                </label>
-                <select
+                <Dropdown
+                  label="Proficiency Level *"
                   value={newSkillLevel}
-                  onChange={(e) =>
-                    setNewSkillLevel(
-                      e.target.value as "Proficient" | "Advanced" | "Intermediate"
-                    )
-                  }
-                  className="w-full p-2.5 bg-base-100 border border-base-300 rounded-xl text-xs text-base-content focus:outline-none focus:border-primary"
-                >
-                  <option value="Advanced" className="bg-base-200">
-                    Advanced
-                  </option>
-                  <option value="Proficient" className="bg-base-200">
-                    Proficient
-                  </option>
-                  <option value="Intermediate" className="bg-base-200">
-                    Intermediate
-                  </option>
-                </select>
+                  onChange={(val) => setNewSkillLevel(val as "Proficient" | "Advanced" | "Intermediate")}
+                  options={[
+                    { value: "Advanced", label: "Advanced" },
+                    { value: "Proficient", label: "Proficient" },
+                    { value: "Intermediate", label: "Intermediate" }
+                  ]}
+                />
               </div>
 
               <div>
@@ -427,7 +445,7 @@ export default function AdminSkillsPage() {
                   disabled={saving}
                   className="px-4 py-2 rounded-xl bg-primary hover:bg-primary/90 text-primary-content text-xs font-semibold shadow-xs cursor-pointer"
                 >
-                  {saving ? "Saving..." : "Add Skill"}
+                  {saving ? "Saving..." : isEditing ? "Save Changes" : "Add Skill"}
                 </button>
               </div>
             </form>

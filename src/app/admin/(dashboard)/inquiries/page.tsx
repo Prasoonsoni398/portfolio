@@ -150,14 +150,14 @@ export default function AdminInquiriesPage() {
 
       {/* Top Filter Tabs in Top Header Highlighted Part */}
       <AdminHeaderPortal>
-        <nav className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar -mb-px" aria-label="Lead Status Tabs">
+        <nav className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto overflow-y-hidden no-scrollbar h-full" aria-label="Lead Status Tabs">
           {(["all", "new", "in_review", "contacted", "archived"] as const).map((status) => {
             const isSelected = selectedStatus === status;
             return (
               <button
                 key={status}
                 onClick={() => setSelectedStatus(status)}
-                className={`pb-3.5 pt-1 px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 cursor-pointer ${
+                className={`h-full px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 cursor-pointer ${
                   isSelected
                     ? "border-primary text-primary"
                     : "border-transparent text-base-content/60 hover:text-base-content hover:border-base-300"

@@ -12,7 +12,6 @@ import {
   ChevronRight
 } from "lucide-react";
 import { db } from "@/lib/db";
-import { AdminHeaderPortal } from "@/components/admin/AdminHeaderPortal";
 
 export const dynamic = "force-dynamic";
 
@@ -42,66 +41,6 @@ export default function AdminDashboardPage() {
           <ExternalLink className="w-3.5 h-3.5 text-base-content/60" />
         </Link>
       </div>
-
-      {/* Top Navigation Tabs in Top Header Highlighted Part */}
-      <AdminHeaderPortal>
-        <nav className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar -mb-px" aria-label="Dashboard Overview Tabs">
-          <Link
-            href="/admin"
-            className="pb-3.5 pt-1 px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 border-primary text-primary"
-          >
-            <span>Command Center</span>
-          </Link>
-          <Link
-            href="/admin/inquiries"
-            className="pb-3.5 pt-1 px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 border-transparent text-base-content/60 hover:text-base-content hover:border-base-300"
-          >
-            <span>Inquiries</span>
-            {stats.newInquiriesCount > 0 ? (
-              <span className="text-[10px] px-1.5 py-0.5 rounded-full font-mono bg-primary/20 text-primary">
-                {stats.newInquiriesCount} new
-              </span>
-            ) : (
-              <span className="text-[10px] px-1.5 py-0.5 rounded-full font-mono bg-base-200 text-base-content/80">
-                {stats.totalInquiries}
-              </span>
-            )}
-          </Link>
-          <Link
-            href="/admin/projects"
-            className="pb-3.5 pt-1 px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 border-transparent text-base-content/60 hover:text-base-content hover:border-base-300"
-          >
-            <span>Projects</span>
-            <span className="text-[10px] px-1.5 py-0.5 rounded-full font-mono bg-base-200 text-base-content/80">
-              {stats.projectsCount}
-            </span>
-          </Link>
-          <Link
-            href="/admin/skills"
-            className="pb-3.5 pt-1 px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 border-transparent text-base-content/60 hover:text-base-content hover:border-base-300"
-          >
-            <span>Skills</span>
-            <span className="text-[10px] px-1.5 py-0.5 rounded-full font-mono bg-base-200 text-base-content/80">
-              {stats.totalSkillsCount}
-            </span>
-          </Link>
-          <Link
-            href="/admin/experience"
-            className="pb-3.5 pt-1 px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 border-transparent text-base-content/60 hover:text-base-content hover:border-base-300"
-          >
-            <span>Experience</span>
-            <span className="text-[10px] px-1.5 py-0.5 rounded-full font-mono bg-base-200 text-base-content/80">
-              {stats.experienceCount}
-            </span>
-          </Link>
-          <Link
-            href="/admin/certifications"
-            className="pb-3.5 pt-1 px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 border-transparent text-base-content/60 hover:text-base-content hover:border-base-300"
-          >
-            <span>Certifications</span>
-          </Link>
-        </nav>
-      </AdminHeaderPortal>
 
       {/* KPI Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

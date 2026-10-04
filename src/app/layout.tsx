@@ -37,7 +37,10 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-base-100 text-base-content selection:bg-primary/20 selection:text-primary">
+      <body
+        suppressHydrationWarning
+        className="min-h-full flex flex-col bg-base-100 text-base-content selection:bg-primary/20 selection:text-primary"
+      >
         <SiteShell>{children}</SiteShell>
       </body>
     </html>

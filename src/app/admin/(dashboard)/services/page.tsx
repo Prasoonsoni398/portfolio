@@ -155,9 +155,9 @@ export default function AdminServicesPage() {
 
       {/* Top Filter Tabs in Top Header Highlighted Part */}
       <AdminHeaderPortal>
-        <nav className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar -mb-px" aria-label="Services Filter">
+        <nav className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto overflow-y-hidden no-scrollbar h-full" aria-label="Services Filter">
           <button
-            className="pb-3.5 pt-1 px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 border-primary text-primary cursor-pointer"
+            className="h-full px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 border-primary text-primary cursor-pointer"
           >
             <Sparkles className="w-3.5 h-3.5" />
             <span>All Services</span>

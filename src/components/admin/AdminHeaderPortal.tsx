@@ -8,21 +8,15 @@ interface AdminHeaderPortalProps {
 }
 
 export function AdminHeaderPortal({ children }: AdminHeaderPortalProps) {
-  const [container, setContainer] = useState<HTMLElement | null>(() => {
-    if (typeof document !== "undefined") {
-      return document.getElementById("admin-header-tabs-portal");
-    }
-    return null;
-  });
+  const [mounted, setMounted] = useState(false);
+  const [container, setContainer] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
-    if (!container) {
-      const el = document.getElementById("admin-header-tabs-portal");
-      if (el) setContainer(el);
-    }
-  }, [container]);
+    setMounted(true);
+    setContainer(document.getElementById("admin-header-tabs-portal"));
+  }, []);
 
-  if (!container) return null;
+  if (!mounted || !container) return null;
 
   return createPortal(children, container);
 }
