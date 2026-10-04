@@ -8,15 +8,18 @@ import {
   RefreshCw,
   User,
   Share2,
-  Shield
+  Shield,
+  Sparkles
 } from "lucide-react";
 import { ProfileSettings } from "@/types/profile";
+import { AdminHeaderPortal } from "@/components/admin/AdminHeaderPortal";
 
 export default function AdminSettingsPage() {
   const [profile, setProfile] = useState<ProfileSettings | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<"all" | "hero" | "identity" | "social" | "security">("all");
 
   useEffect(() => {
     fetchProfile();
@@ -82,33 +85,51 @@ export default function AdminSettingsPage() {
         </div>
       )}
 
-      {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-base-300">
-        <div>
-          <div className="flex items-center gap-2 text-xs font-mono text-primary mb-1">
-            <Settings className="w-3.5 h-3.5" />
-            GLOBAL CONFIGURATION &bull; SITE IDENTITY
-          </div>
-          <h1 className="text-2xl font-bold tracking-tight text-base-content">
-            Site Profile & Settings
-          </h1>
-          <p className="text-sm text-base-content/70 mt-1">
-            Update personal bio, headline, contact email, social handles, and availability.
-          </p>
-        </div>
-
+      {/* Single Toolbar Row */}
+      <div className="flex items-center justify-end gap-3">
         <button
           onClick={handleSave}
           disabled={saving}
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary hover:bg-primary/90 text-primary-content font-semibold text-xs shadow-sm transition-all cursor-pointer disabled:opacity-50"
+          className="inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-primary hover:bg-primary/90 text-primary-content font-semibold text-xs shadow-sm transition-all cursor-pointer disabled:opacity-50"
         >
           <Save className="w-4 h-4" />
           <span>{saving ? "Saving Changes..." : "Save Settings"}</span>
         </button>
       </div>
 
+      {/* Top Filter Tabs in Top Header Highlighted Part */}
+      <AdminHeaderPortal>
+        <nav className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar -mb-px" aria-label="Settings Sections">
+          {[
+            { id: "all", label: "All Settings", icon: Settings },
+            { id: "identity", label: "Identity & Bio", icon: User },
+            { id: "social", label: "Social & Resume", icon: Share2 },
+            { id: "security", label: "Security & Env", icon: Shield }
+          ].map((tab) => {
+            const Icon = tab.icon;
+            const isSelected = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => setActiveTab(tab.id as any)}
+                className={`pb-3.5 pt-1 px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 cursor-pointer ${
+                  isSelected
+                    ? "border-primary text-primary"
+                    : "border-transparent text-base-content/60 hover:text-base-content hover:border-base-300"
+                }`}
+              >
+                <Icon className="w-3.5 h-3.5" />
+                <span>{tab.label}</span>
+              </button>
+            );
+          })}
+        </nav>
+      </AdminHeaderPortal>
+
       <form onSubmit={handleSave} className="space-y-6">
         {/* Personal Bio & Identity */}
+        {(activeTab === "all" || activeTab === "identity") && (
         <div className="bg-base-200 border border-base-300 rounded-2xl p-6 space-y-4">
           <div className="flex items-center gap-2 pb-3 border-b border-base-300/50">
             <User className="w-4 h-4 text-primary" />
@@ -224,8 +245,10 @@ export default function AdminSettingsPage() {
             </div>
           </div>
         </div>
+        )}
 
         {/* Social Links & Resume */}
+        {(activeTab === "all" || activeTab === "social") && (
         <div className="bg-base-200 border border-base-300 rounded-2xl p-6 space-y-4">
           <div className="flex items-center gap-2 pb-3 border-b border-base-300/50">
             <Share2 className="w-4 h-4 text-secondary" />
@@ -287,8 +310,10 @@ export default function AdminSettingsPage() {
             </div>
           </div>
         </div>
+        )}
 
         {/* Security & System Info */}
+        {(activeTab === "all" || activeTab === "security") && (
         <div className="bg-base-200 border border-base-300 rounded-2xl p-6 space-y-4">
           <div className="flex items-center gap-2 pb-3 border-b border-base-300/50">
             <Shield className="w-4 h-4 text-primary" />
@@ -307,6 +332,7 @@ export default function AdminSettingsPage() {
             <div>ADMIN_SESSION_SECRET=portfolio_crm_secret_key_...</div>
           </div>
         </div>
+        )}
 
         <div className="flex justify-end">
           <button

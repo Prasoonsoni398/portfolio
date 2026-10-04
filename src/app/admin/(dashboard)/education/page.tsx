@@ -12,6 +12,7 @@ import {
   MapPin
 } from "lucide-react";
 import { Education } from "@/types/education";
+import { AdminHeaderPortal } from "@/components/admin/AdminHeaderPortal";
 
 const emptyEducation: Education = {
   id: "",
@@ -144,29 +145,31 @@ export default function AdminEducationPage() {
         </div>
       )}
 
-      {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-base-300">
-        <div>
-          <div className="flex items-center gap-2 text-xs font-mono text-primary mb-1">
-            <GraduationCap className="w-3.5 h-3.5" />
-            ACADEMICS &bull; {educations.length} RECORDS
-          </div>
-          <h1 className="text-2xl font-bold tracking-tight text-base-content">
-            Education & Academic Credentials
-          </h1>
-          <p className="text-sm text-base-content/70 mt-1">
-            Manage your degrees, university affiliations, coursework, and honors.
-          </p>
-        </div>
-
+      {/* Single Toolbar Row */}
+      <div className="flex items-center justify-end gap-3">
         <button
           onClick={handleOpenCreate}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary hover:bg-primary/90 text-primary-content font-semibold text-xs shadow-sm transition-all cursor-pointer"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary hover:bg-primary/90 text-primary-content font-semibold text-xs shadow-sm transition-all cursor-pointer"
         >
           <Plus className="w-4 h-4" />
           <span>Add Education</span>
         </button>
       </div>
+
+      {/* Top Filter Tabs in Top Header Highlighted Part */}
+      <AdminHeaderPortal>
+        <nav className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar -mb-px" aria-label="Education Filter">
+          <button
+            className="pb-3.5 pt-1 px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 border-primary text-primary cursor-pointer"
+          >
+            <GraduationCap className="w-3.5 h-3.5" />
+            <span>All Qualifications</span>
+            <span className="text-[10px] px-1.5 py-0.5 rounded-full font-mono bg-primary/20 text-primary">
+              {educations.length}
+            </span>
+          </button>
+        </nav>
+      </AdminHeaderPortal>
 
       {/* Education List */}
       {loading ? (

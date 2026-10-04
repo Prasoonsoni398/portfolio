@@ -14,4 +14,14 @@ export interface ProfileSettings {
   twitterUrl?: string;
   siteUrl: string;
   resumePath: string;
+
+  // Hero (Home) Section Customization
+  heroGreeting?: string;
+  heroTagline?: string;
+  heroDescription?: string;
+  heroStatusText?: string;
+  heroPrimaryCtaText?: string;
+  heroPrimaryCtaLink?: string;
+  heroSecondaryCtaText?: string;
 }
+

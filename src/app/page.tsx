@@ -16,6 +16,7 @@ import { db } from "@/lib/db";
 export const dynamic = "force-dynamic";
 
 export default function HomePage() {
+  const profile = db.getProfile();
   const projects = db.getProjects();
   const skills = db.getSkills();
   const experiences = db.getExperiences();
@@ -26,7 +27,7 @@ export default function HomePage() {
 
   return (
     <>
-      <Hero />
+      <Hero profile={profile} />
       <StatsSection />
       <AboutSection />
       <SkillsSection skillGroups={skills} />

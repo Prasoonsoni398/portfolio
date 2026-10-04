@@ -12,6 +12,7 @@ import {
   ChevronRight
 } from "lucide-react";
 import { db } from "@/lib/db";
+import { AdminHeaderPortal } from "@/components/admin/AdminHeaderPortal";
 
 export const dynamic = "force-dynamic";
 
@@ -23,39 +24,84 @@ export default function AdminDashboardPage() {
 
   return (
     <div className="space-y-8">
-      {/* Top Banner / Welcome */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-base-300">
-        <div>
-          <div className="flex items-center gap-2 text-xs font-mono text-primary mb-1">
-            <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
-            CRM SYSTEM ACTIVE &bull; {profile.name}
-          </div>
-          <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-base-content">
-            Portfolio Command Center
-          </h1>
-          <p className="text-sm text-base-content/70 mt-1">
-            Manage your leads, portfolio content, skills, and projects in real time.
-          </p>
-        </div>
+      {/* Single Toolbar Row */}
+      <div className="flex items-center justify-end gap-3">
+        <Link
+          href="/admin/projects"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary hover:bg-primary/90 text-primary-content text-xs font-semibold shadow-sm transition-all"
+        >
+          <PlusCircle className="w-4 h-4" />
+          <span>Add Project</span>
+        </Link>
+        <Link
+          href="/"
+          target="_blank"
+          className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-base-200 hover:bg-base-300 text-base-content border border-base-300 text-xs font-semibold transition-colors"
+        >
+          <span>Live Portfolio</span>
+          <ExternalLink className="w-3.5 h-3.5 text-base-content/60" />
+        </Link>
+      </div>
 
-        <div className="flex items-center gap-3">
+      {/* Top Navigation Tabs in Top Header Highlighted Part */}
+      <AdminHeaderPortal>
+        <nav className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar -mb-px" aria-label="Dashboard Overview Tabs">
+          <Link
+            href="/admin"
+            className="pb-3.5 pt-1 px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 border-primary text-primary"
+          >
+            <span>Command Center</span>
+          </Link>
+          <Link
+            href="/admin/inquiries"
+            className="pb-3.5 pt-1 px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 border-transparent text-base-content/60 hover:text-base-content hover:border-base-300"
+          >
+            <span>Inquiries</span>
+            {stats.newInquiriesCount > 0 ? (
+              <span className="text-[10px] px-1.5 py-0.5 rounded-full font-mono bg-primary/20 text-primary">
+                {stats.newInquiriesCount} new
+              </span>
+            ) : (
+              <span className="text-[10px] px-1.5 py-0.5 rounded-full font-mono bg-base-200 text-base-content/80">
+                {stats.totalInquiries}
+              </span>
+            )}
+          </Link>
           <Link
             href="/admin/projects"
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-primary/10 hover:bg-primary/20 text-primary border border-primary/30 text-xs font-semibold transition-colors"
+            className="pb-3.5 pt-1 px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 border-transparent text-base-content/60 hover:text-base-content hover:border-base-300"
           >
-            <PlusCircle className="w-4 h-4" />
-            <span>Add Project</span>
+            <span>Projects</span>
+            <span className="text-[10px] px-1.5 py-0.5 rounded-full font-mono bg-base-200 text-base-content/80">
+              {stats.projectsCount}
+            </span>
           </Link>
           <Link
-            href="/"
-            target="_blank"
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-base-200 hover:bg-base-300 text-base-content border border-base-300 text-xs font-semibold transition-colors"
+            href="/admin/skills"
+            className="pb-3.5 pt-1 px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 border-transparent text-base-content/60 hover:text-base-content hover:border-base-300"
           >
-            <span>Live Portfolio</span>
-            <ExternalLink className="w-3.5 h-3.5 text-base-content/60" />
+            <span>Skills</span>
+            <span className="text-[10px] px-1.5 py-0.5 rounded-full font-mono bg-base-200 text-base-content/80">
+              {stats.totalSkillsCount}
+            </span>
           </Link>
-        </div>
-      </div>
+          <Link
+            href="/admin/experience"
+            className="pb-3.5 pt-1 px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 border-transparent text-base-content/60 hover:text-base-content hover:border-base-300"
+          >
+            <span>Experience</span>
+            <span className="text-[10px] px-1.5 py-0.5 rounded-full font-mono bg-base-200 text-base-content/80">
+              {stats.experienceCount}
+            </span>
+          </Link>
+          <Link
+            href="/admin/certifications"
+            className="pb-3.5 pt-1 px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 border-transparent text-base-content/60 hover:text-base-content hover:border-base-300"
+          >
+            <span>Certifications</span>
+          </Link>
+        </nav>
+      </AdminHeaderPortal>
 
       {/* KPI Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

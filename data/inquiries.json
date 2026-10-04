@@ -8,15 +8,5 @@
     "createdAt": "2026-10-02T08:12:41.153Z",
     "status": "contacted",
     "notes": "High priority lead from Techcraft. Review repository links before replying."
-  },
-  {
-    "id": "inq-2",
-    "name": "Sara Lin",
-    "email": "sara.lin@startupstudio.co",
-    "subject": "Next.js & Frontend Architecture Consulting",
-    "message": "Hello Prasoon! Loved your interactive portfolio UI. Are you currently available for freelance architectural reviews and UI component performance tuning?",
-    "createdAt": "2026-09-29T08:12:41.154Z",
-    "status": "in_review",
-    "notes": "Follow up with consulting rate sheet."
   }
 ]

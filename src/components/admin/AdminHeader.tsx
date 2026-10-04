@@ -1,18 +1,8 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  ChevronRight,
-  Sun,
-  Moon,
-  ExternalLink,
-  Menu,
-  Shield,
-  Palette
-} from "lucide-react";
-import { useTheme } from "@/hooks/useTheme";
+import { ChevronRight, Menu } from "lucide-react";
 
 const routeNames: Record<string, string> = {
   "/admin": "Dashboard",
@@ -33,14 +23,12 @@ interface AdminHeaderProps {
 
 export function AdminHeader({ userEmail, onToggleMobileMenu }: AdminHeaderProps) {
   const pathname = usePathname();
-  const { theme, isDark, toggleMode, mounted } = useTheme();
-
   const currentLabel = routeNames[pathname] || "Admin Console";
 
   return (
-    <header className="sticky top-0 z-30 flex items-center justify-between px-4 sm:px-8 py-3.5 bg-base-100/90 backdrop-blur-md border-b border-base-300 transition-colors">
+    <header className="sticky top-0 z-30 flex items-center justify-between px-3 sm:px-6 bg-base-100/90 backdrop-blur-md border-b border-base-300 transition-colors min-h-[57px] gap-2">
       {/* Left: Mobile Menu & Breadcrumbs */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 sm:gap-3 py-2 flex-shrink-0">
         {onToggleMobileMenu && (
           <button
             onClick={onToggleMobileMenu}
@@ -53,60 +41,20 @@ export function AdminHeader({ userEmail, onToggleMobileMenu }: AdminHeaderProps)
 
         {/* Breadcrumb Bar */}
         <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs sm:text-sm font-medium">
-          <Link
-            href="/admin"
-            className="text-base-content/60 hover:text-primary transition-colors flex items-center gap-1.5"
-          >
-            <span className="w-2 h-2 rounded-full bg-primary" />
-            <span>Portfolio CRM</span>
-          </Link>
-
-          <ChevronRight className="w-3.5 h-3.5 text-base-content/40 shrink-0" />
-
-          <span className="font-semibold text-base-content truncate max-w-[150px] sm:max-w-none">
+          <span className="w-2 h-2 rounded-full bg-primary" />
+          <span className="text-base-content/60 hidden md:inline">Portfolio CRM</span>
+          <ChevronRight className="w-3.5 h-3.5 text-base-content/40 hidden md:inline" />
+          <span className="font-semibold text-base-content truncate max-w-[120px] sm:max-w-none">
             {currentLabel}
           </span>
         </nav>
       </div>
 
-      {/* Right: Actions, Theme Switcher & Status */}
-      <div className="flex items-center gap-2 sm:gap-3">
-        {/* FlyonUI Light/Dark Mode Toggle */}
-        <button
-          onClick={toggleMode}
-          className="p-2 sm:px-3 sm:py-1.5 rounded-xl bg-base-200 hover:bg-base-300 text-base-content border border-base-300 flex items-center gap-2 text-xs font-medium transition-all cursor-pointer"
-          title={`Switch to ${isDark ? "Light Mode" : "Dark Mode"}`}
-        >
-          {mounted && isDark ? (
-            <>
-              <Sun className="w-4 h-4 text-warning" />
-              <span className="hidden sm:inline">Light Mode</span>
-            </>
-          ) : (
-            <>
-              <Moon className="w-4 h-4 text-primary" />
-              <span className="hidden sm:inline">Dark Mode</span>
-            </>
-          )}
-        </button>
-
-        {/* View Live Site Shortcut */}
-        <Link
-          href="/"
-          target="_blank"
-          className="p-2 sm:px-3 sm:py-1.5 rounded-xl bg-base-200 hover:bg-base-300 text-base-content border border-base-300 flex items-center gap-1.5 text-xs font-medium transition-colors"
-          title="Open Public Portfolio in new tab"
-        >
-          <span className="hidden sm:inline">Live Site</span>
-          <ExternalLink className="w-3.5 h-3.5 text-base-content/60" />
-        </Link>
-
-        {/* Admin Verified Status Badge */}
-        <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-primary/10 border border-primary/20 text-primary text-xs font-medium">
-          <Shield className="w-3.5 h-3.5" />
-          <span className="truncate max-w-[140px]">{userEmail}</span>
-        </div>
-      </div>
+      {/* Right: Top Tabs with Bottom Border in Highlighted Area */}
+      <div
+        id="admin-header-tabs-portal"
+        className="flex-1 flex items-center justify-end overflow-x-auto no-scrollbar self-stretch items-end px-1 sm:px-3 -mb-px"
+      />
     </header>
   );
 }

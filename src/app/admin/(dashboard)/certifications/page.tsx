@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { Certification } from "@/types/certification";
 import { Achievement } from "@/types/achievement";
+import { AdminHeaderPortal } from "@/components/admin/AdminHeaderPortal";
 
 const emptyCert: Certification = {
   id: "",
@@ -192,55 +193,58 @@ export default function AdminCertificationsPage() {
         </div>
       )}
 
-      {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-base-300">
-        <div>
-          <div className="flex items-center gap-2 text-xs font-mono text-primary mb-1">
-            <Award className="w-3.5 h-3.5" />
-            CREDENTIALS & RECOGNITION
-          </div>
-          <h1 className="text-2xl font-bold tracking-tight text-base-content">
-            Certifications & Achievements
-          </h1>
-          <p className="text-sm text-base-content/70 mt-1">
-            Showcase verified badges, industry certificates, hackathon honors, and awards.
-          </p>
-        </div>
-
+      {/* Single Toolbar Row */}
+      <div className="flex items-center justify-end gap-3">
         <button
           onClick={activeTab === "certifications" ? handleOpenCreateCert : handleOpenCreateAch}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary hover:bg-primary/90 text-primary-content font-semibold text-xs shadow-sm transition-all cursor-pointer"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary hover:bg-primary/90 text-primary-content font-semibold text-xs shadow-sm transition-all cursor-pointer"
         >
           <Plus className="w-4 h-4" />
           <span>{activeTab === "certifications" ? "Add Certification" : "Add Achievement"}</span>
         </button>
       </div>
 
-      {/* Tab Selector */}
-      <div className="flex items-center gap-2 border-b border-base-300 pb-3">
-        <button
-          onClick={() => setActiveTab("certifications")}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
-            activeTab === "certifications"
-              ? "bg-primary text-primary-content shadow-xs"
-              : "text-base-content/70 hover:text-base-content"
-          }`}
-        >
-          <Award className="w-4 h-4" />
-          <span>Certifications ({certs.length})</span>
-        </button>
-        <button
-          onClick={() => setActiveTab("achievements")}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
-            activeTab === "achievements"
-              ? "bg-primary text-primary-content shadow-xs"
-              : "text-base-content/70 hover:text-base-content"
-          }`}
-        >
-          <Trophy className="w-4 h-4" />
-          <span>Achievements ({achs.length})</span>
-        </button>
-      </div>
+      {/* Top Filter Tabs in Top Header Highlighted Part */}
+      <AdminHeaderPortal>
+        <nav className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar -mb-px" aria-label="Credentials Tabs">
+          <button
+            onClick={() => setActiveTab("certifications")}
+            className={`pb-3.5 pt-1 px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 cursor-pointer ${
+              activeTab === "certifications"
+                ? "border-primary text-primary"
+                : "border-transparent text-base-content/60 hover:text-base-content hover:border-base-300"
+            }`}
+          >
+            <Award className="w-3.5 h-3.5" />
+            <span>Certifications</span>
+            <span
+              className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono ${
+                activeTab === "certifications" ? "bg-primary/20 text-primary" : "bg-base-200 text-base-content/80"
+              }`}
+            >
+              {certs.length}
+            </span>
+          </button>
+          <button
+            onClick={() => setActiveTab("achievements")}
+            className={`pb-3.5 pt-1 px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 cursor-pointer ${
+              activeTab === "achievements"
+                ? "border-primary text-primary"
+                : "border-transparent text-base-content/60 hover:text-base-content hover:border-base-300"
+            }`}
+          >
+            <Trophy className="w-3.5 h-3.5" />
+            <span>Achievements</span>
+            <span
+              className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono ${
+                activeTab === "achievements" ? "bg-primary/20 text-primary" : "bg-base-200 text-base-content/80"
+              }`}
+            >
+              {achs.length}
+            </span>
+          </button>
+        </nav>
+      </AdminHeaderPortal>
 
       {/* Content */}
       {loading ? (

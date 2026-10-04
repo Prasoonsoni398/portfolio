@@ -13,6 +13,7 @@ import {
   Calendar
 } from "lucide-react";
 import { Experience } from "@/types/experience";
+import { AdminHeaderPortal } from "@/components/admin/AdminHeaderPortal";
 
 const emptyExperience: Experience = {
   id: "",
@@ -39,6 +40,12 @@ export default function AdminExperiencePage() {
   const [techText, setTechText] = useState("");
   const [saving, setSaving] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
+  const [selectedType, setSelectedType] = useState<string>("all");
+
+  const experienceTypes = ["Full-time", "Traineeship", "Educational Content Development"];
+  const filteredExperiences = selectedType === "all"
+    ? experiences
+    : experiences.filter((e) => e.type === selectedType);
 
   useEffect(() => {
     fetchExperience();
@@ -148,29 +155,63 @@ export default function AdminExperiencePage() {
         </div>
       )}
 
-      {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-base-300">
-        <div>
-          <div className="flex items-center gap-2 text-xs font-mono text-primary mb-1">
-            <Briefcase className="w-3.5 h-3.5" />
-            CAREER &bull; {experiences.length} ROLES
-          </div>
-          <h1 className="text-2xl font-bold tracking-tight text-base-content">
-            Professional Experience Manager
-          </h1>
-          <p className="text-sm text-base-content/70 mt-1">
-            Manage your employment history, traineeships, and career achievements.
-          </p>
-        </div>
-
+      {/* Single Toolbar Row */}
+      <div className="flex items-center justify-end gap-3">
         <button
           onClick={handleOpenCreate}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary hover:bg-primary/90 text-primary-content font-semibold text-xs shadow-sm transition-all cursor-pointer"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary hover:bg-primary/90 text-primary-content font-semibold text-xs shadow-sm transition-all cursor-pointer"
         >
           <Plus className="w-4 h-4" />
           <span>Add Experience</span>
         </button>
       </div>
+
+      {/* Top Filter Tabs in Top Header Highlighted Part */}
+      <AdminHeaderPortal>
+        <nav className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar -mb-px" aria-label="Experience Roles Filter">
+          <button
+            onClick={() => setSelectedType("all")}
+            className={`pb-3.5 pt-1 px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 cursor-pointer ${
+              selectedType === "all"
+                ? "border-primary text-primary"
+                : "border-transparent text-base-content/60 hover:text-base-content hover:border-base-300"
+            }`}
+          >
+            <span>All Roles</span>
+            <span
+              className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono ${
+                selectedType === "all" ? "bg-primary/20 text-primary" : "bg-base-200 text-base-content/80"
+              }`}
+            >
+              {experiences.length}
+            </span>
+          </button>
+          {experienceTypes.map((type) => {
+            const count = experiences.filter((e) => e.type === type).length;
+            const isSelected = selectedType === type;
+            return (
+              <button
+                key={type}
+                onClick={() => setSelectedType(type)}
+                className={`pb-3.5 pt-1 px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 cursor-pointer ${
+                  isSelected
+                    ? "border-primary text-primary"
+                    : "border-transparent text-base-content/60 hover:text-base-content hover:border-base-300"
+                }`}
+              >
+                <span>{type}</span>
+                <span
+                  className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono ${
+                    isSelected ? "bg-primary/20 text-primary" : "bg-base-200 text-base-content/80"
+                  }`}
+                >
+                  {count}
+                </span>
+              </button>
+            );
+          })}
+        </nav>
+      </AdminHeaderPortal>
 
       {/* Experience List */}
       {loading ? (
@@ -178,14 +219,14 @@ export default function AdminExperiencePage() {
           <RefreshCw className="w-6 h-6 animate-spin mx-auto mb-2 text-primary" />
           Loading experience records...
         </div>
-      ) : experiences.length === 0 ? (
+      ) : filteredExperiences.length === 0 ? (
         <div className="p-12 text-center border border-dashed border-base-300 rounded-2xl bg-base-200">
           <Briefcase className="w-8 h-8 text-base-content/40 mx-auto mb-2" />
-          <p className="text-sm font-semibold text-base-content">No experience records found</p>
+          <p className="text-sm font-semibold text-base-content">No experience records found in this category</p>
         </div>
       ) : (
         <div className="space-y-4">
-          {experiences.map((item) => (
+          {filteredExperiences.map((item) => (
             <div
               key={item.id}
               className="bg-base-200 border border-base-300 rounded-2xl p-6 hover:border-primary/40 transition-all flex flex-col md:flex-row justify-between gap-4"

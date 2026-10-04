@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import {
-  FolderGit2,
   Plus,
   Search,
   ExternalLink,
@@ -16,6 +15,7 @@ import {
 } from "lucide-react";
 import { Project } from "@/types/project";
 import { GithubIcon } from "@/components/common/Icons";
+import { AdminHeaderPortal } from "@/components/admin/AdminHeaderPortal";
 
 const CATEGORIES: Project["category"][] = [
   "Full Stack",
@@ -182,6 +182,13 @@ export default function AdminProjectsPage() {
     setTimeout(() => setFeedback(null), 3000);
   }
 
+  const categoryCounts: Record<string, number> = {
+    all: projects.length
+  };
+  CATEGORIES.forEach((cat) => {
+    categoryCounts[cat] = projects.filter((p) => p.category === cat).length;
+  });
+
   const filteredProjects = projects.filter((p) => {
     const matchesCategory =
       selectedCategory === "all" || p.category === selectedCategory;
@@ -202,69 +209,75 @@ export default function AdminProjectsPage() {
         </div>
       )}
 
-      {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-base-300">
-        <div>
-          <div className="flex items-center gap-2 text-xs font-mono text-primary mb-1">
-            <FolderGit2 className="w-3.5 h-3.5" />
-            CONTENT MANAGEMENT &bull; {projects.length} PROJECTS
-          </div>
-          <h1 className="text-2xl font-bold tracking-tight text-base-content">
-            Projects Portfolio Manager
-          </h1>
-          <p className="text-sm text-base-content/70 mt-1">
-            Create, edit, showcase, and reorder flagship engineering projects.
-          </p>
-        </div>
-
-        <button
-          onClick={handleOpenCreate}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary hover:bg-primary/90 text-primary-content font-semibold text-xs shadow-sm transition-all cursor-pointer"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Add New Project</span>
-        </button>
-      </div>
-
-      {/* Search & Category Filter */}
-      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
-        {/* Category Pills */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0">
+      {/* Top Filter Tabs in Top Header Highlighted Part */}
+      <AdminHeaderPortal>
+        <nav className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar -mb-px" aria-label="Project Categories">
           <button
             onClick={() => setSelectedCategory("all")}
-            className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
+            className={`pb-3.5 pt-1 px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 cursor-pointer ${
               selectedCategory === "all"
-                ? "bg-primary text-primary-content shadow-xs"
-                : "bg-base-200 text-base-content/70 hover:text-base-content hover:bg-base-300 border border-base-300"
+                ? "border-primary text-primary"
+                : "border-transparent text-base-content/60 hover:text-base-content hover:border-base-300"
             }`}
           >
-            All ({projects.length})
+            <span>All Projects</span>
+            <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-base-200 text-base-content/80 font-mono">
+              {projects.length}
+            </span>
           </button>
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
-                selectedCategory === cat
-                  ? "bg-primary text-primary-content shadow-xs"
-                  : "bg-base-200 text-base-content/70 hover:text-base-content hover:bg-base-300 border border-base-300"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
 
-        {/* Search Input */}
-        <div className="relative min-w-[260px]">
+          {CATEGORIES.map((cat) => {
+            const isSelected = selectedCategory === cat;
+            return (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                className={`pb-3.5 pt-1 px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 cursor-pointer ${
+                  isSelected
+                    ? "border-primary text-primary"
+                    : "border-transparent text-base-content/60 hover:text-base-content hover:border-base-300"
+                }`}
+              >
+                <span>{cat}</span>
+                <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono ${
+                  isSelected ? "bg-primary/20 text-primary" : "bg-base-200 text-base-content/80"
+                }`}>
+                  {categoryCounts[cat] || 0}
+                </span>
+              </button>
+            );
+          })}
+        </nav>
+      </AdminHeaderPortal>
+
+      {/* Single Toolbar Row: Search on Left, Actions on Right */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="relative w-full max-w-sm">
           <Search className="w-3.5 h-3.5 text-base-content/40 absolute left-3 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search projects or tech..."
-            className="w-full pl-9 pr-3 py-1.5 bg-base-200 border border-base-300 rounded-xl text-xs text-base-content placeholder-base-content/40 focus:outline-none focus:border-primary"
+            placeholder="Search projects or technologies..."
+            className="w-full pl-9 pr-3 py-2 bg-base-200 border border-base-300 rounded-xl text-xs text-base-content placeholder-base-content/40 focus:outline-none focus:border-primary"
           />
+        </div>
+
+        <div className="flex items-center gap-2 self-end sm:self-auto flex-shrink-0">
+          <button
+            onClick={handleOpenCreate}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary hover:bg-primary/90 text-primary-content font-semibold text-xs shadow-sm transition-all cursor-pointer"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Add New Project</span>
+          </button>
+          <button
+            onClick={fetchProjects}
+            className="inline-flex items-center justify-center p-2 rounded-xl bg-base-200 hover:bg-base-300 text-base-content border border-base-300 text-xs font-semibold transition-colors cursor-pointer"
+            title="Reload Projects"
+          >
+            <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
+          </button>
         </div>
       </div>
 
@@ -276,7 +289,6 @@ export default function AdminProjectsPage() {
         </div>
       ) : filteredProjects.length === 0 ? (
         <div className="p-12 text-center border border-dashed border-base-300 rounded-2xl bg-base-200">
-          <FolderGit2 className="w-8 h-8 text-base-content/40 mx-auto mb-2" />
           <p className="text-sm font-semibold text-base-content">No projects found</p>
           <p className="text-xs text-base-content/60 mt-1">Try adjusting your category or search filter.</p>
         </div>
@@ -401,8 +413,7 @@ export default function AdminProjectsPage() {
             {/* Modal Header */}
             <div className="p-5 border-b border-base-300 flex items-center justify-between">
               <div>
-                <h2 className="text-base font-bold text-base-content flex items-center gap-2">
-                  <FolderGit2 className="w-4 h-4 text-primary" />
+                <h2 className="text-base font-bold text-base-content">
                   {isEditing ? `Edit "${editingProject.title}"` : "Create New Flagship Project"}
                 </h2>
                 <p className="text-xs text-base-content/70 mt-0.5">

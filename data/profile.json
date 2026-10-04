@@ -11,5 +11,12 @@
   "githubUrl": "https://github.com/Prasoonsoni398",
   "linkedinUrl": "https://linkedin.com/in/prasoonsoni398",
   "siteUrl": "https://prasoonsoni.dev",
-  "resumePath": "/resume/resume.pdf"
+  "resumePath": "/resume/resume.pdf",
+  "heroGreeting": "Hello World, my name is",
+  "heroTagline": "Frontend Developer & Full-Stack Engineer",
+  "heroDescription": "I build responsive, scalable, and user-focused web applications using modern JavaScript and TypeScript technologies. Currently engineering client features as a Trainee at Raj Digital, Bhopal.",
+  "heroStatusText": "Available for Opportunities",
+  "heroPrimaryCtaText": "View My Work",
+  "heroPrimaryCtaLink": "#projects",
+  "heroSecondaryCtaText": "Download Resume"
 }

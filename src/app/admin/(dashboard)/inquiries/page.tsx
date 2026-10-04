@@ -8,10 +8,10 @@ import {
   Send,
   Trash2,
   CheckCircle,
-  RefreshCw,
-  ExternalLink
+  RefreshCw
 } from "lucide-react";
 import { Inquiry, InquiryStatus } from "@/types/inquiry";
+import { AdminHeaderPortal } from "@/components/admin/AdminHeaderPortal";
 
 export default function AdminInquiriesPage() {
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
@@ -148,63 +148,53 @@ export default function AdminInquiriesPage() {
         </div>
       )}
 
-      {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-base-300">
-        <div>
-          <div className="flex items-center gap-2 text-xs font-mono text-primary mb-1">
-            <Inbox className="w-3.5 h-3.5" />
-            CRM LEAD MANAGEMENT &bull; {statusCounts.new} NEW INQUIRIES
-          </div>
-          <h1 className="text-2xl font-bold tracking-tight text-base-content">
-            Lead Inbox & Client Inquiries
-          </h1>
-          <p className="text-sm text-base-content/70 mt-1">
-            Review incoming project opportunities, messages, and track client communications.
-          </p>
-        </div>
+      {/* Top Filter Tabs in Top Header Highlighted Part */}
+      <AdminHeaderPortal>
+        <nav className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar -mb-px" aria-label="Lead Status Tabs">
+          {(["all", "new", "in_review", "contacted", "archived"] as const).map((status) => {
+            const isSelected = selectedStatus === status;
+            return (
+              <button
+                key={status}
+                onClick={() => setSelectedStatus(status)}
+                className={`pb-3.5 pt-1 px-2.5 sm:px-3 text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap border-b-2 cursor-pointer ${
+                  isSelected
+                    ? "border-primary text-primary"
+                    : "border-transparent text-base-content/60 hover:text-base-content hover:border-base-300"
+                }`}
+              >
+                <span className="capitalize">{status === "all" ? "All Leads" : status.replace("_", " ")}</span>
+                <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono ${
+                  isSelected ? "bg-primary/20 text-primary" : "bg-base-200 text-base-content/80"
+                }`}>
+                  {statusCounts[status]}
+                </span>
+              </button>
+            );
+          })}
+        </nav>
+      </AdminHeaderPortal>
 
-        <button
-          onClick={fetchInquiries}
-          className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-base-200 hover:bg-base-300 text-base-content border border-base-300 text-xs font-semibold transition-colors"
-        >
-          <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
-          <span>Refresh</span>
-        </button>
-      </div>
-
-      {/* Filters & Search */}
-      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
-        {/* Status Tabs */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0">
-          {(["all", "new", "in_review", "contacted", "archived"] as const).map((status) => (
-            <button
-              key={status}
-              onClick={() => setSelectedStatus(status)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
-                selectedStatus === status
-                  ? "bg-primary text-primary-content shadow-xs"
-                  : "bg-base-200 text-base-content/70 hover:text-base-content hover:bg-base-300 border border-base-300"
-              }`}
-            >
-              {status === "all" ? "All Leads" : status.replace("_", " ")}
-              <span className="ml-1.5 text-[10px] opacity-80 font-mono">
-                ({statusCounts[status]})
-              </span>
-            </button>
-          ))}
-        </div>
-
-        {/* Search */}
-        <div className="relative min-w-[260px]">
+      {/* Single Toolbar Row: Search on Left, Refresh on Right */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="relative w-full max-w-sm">
           <Search className="w-3.5 h-3.5 text-base-content/40 absolute left-3 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search leads, email, topic..."
-            className="w-full pl-9 pr-3 py-1.5 bg-base-200 border border-base-300 rounded-xl text-xs text-base-content placeholder-base-content/40 focus:outline-none focus:border-primary"
+            className="w-full pl-9 pr-3 py-2 bg-base-200 border border-base-300 rounded-xl text-xs text-base-content placeholder-base-content/40 focus:outline-none focus:border-primary"
           />
         </div>
+
+        <button
+          onClick={fetchInquiries}
+          className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-base-200 hover:bg-base-300 text-base-content border border-base-300 text-xs font-semibold transition-colors self-end sm:self-auto cursor-pointer"
+        >
+          <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
+          <span>Refresh</span>
+        </button>
       </div>
 
       {/* Two Column Layout: List on Left, Detail Drawer on Right */}
@@ -327,7 +317,7 @@ export default function AdminInquiriesPage() {
                   <button
                     key={st}
                     onClick={() => handleStatusChange(selectedInquiry.id, st)}
-                    className={`py-1.5 px-3 rounded-xl text-xs font-semibold border text-center transition-all ${
+                    className={`py-1.5 px-3 rounded-xl text-xs font-semibold border text-center transition-all cursor-pointer ${
                       selectedInquiry.status === st
                         ? "bg-primary text-primary-content border-primary shadow-xs"
                         : "bg-base-100 text-base-content/70 hover:text-base-content border-base-300"
@@ -392,7 +382,7 @@ export default function AdminInquiriesPage() {
                 <button
                   onClick={handleSaveNotes}
                   disabled={savingNotes}
-                  className="px-3 py-1.5 rounded-lg bg-base-300 hover:bg-base-300/80 text-xs text-base-content font-semibold transition-colors"
+                  className="px-3 py-1.5 rounded-lg bg-base-300 hover:bg-base-300/80 text-xs text-base-content font-semibold transition-colors cursor-pointer"
                 >
                   {savingNotes ? "Saving..." : "Save Notes"}
                 </button>

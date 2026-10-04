@@ -17,8 +17,11 @@ import {
   LogOut,
   X,
   ChevronRight,
-  ShieldCheck
+  ShieldCheck,
+  Sun,
+  Moon
 } from "lucide-react";
+import { useTheme } from "@/hooks/useTheme";
 
 interface AdminSidebarProps {
   userEmail: string;
@@ -36,6 +39,7 @@ export function AdminSidebar({
   const pathname = usePathname();
   const router = useRouter();
   const [loggingOut, setLoggingOut] = useState(false);
+  const { isDark, toggleMode, mounted } = useTheme();
 
   const navItems = [
     { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
@@ -175,14 +179,27 @@ export function AdminSidebar({
                 <span className="w-1.5 h-1.5 rounded-full bg-success" /> Verified Admin
               </p>
             </div>
-            <button
-              onClick={handleLogout}
-              disabled={loggingOut}
-              title="Log out of CRM"
-              className="p-1.5 rounded-lg text-base-content/60 hover:text-error hover:bg-error/10 transition-colors cursor-pointer"
-            >
-              <LogOut className="w-4 h-4" />
-            </button>
+            <div className="flex items-center gap-1">
+              <button
+                onClick={toggleMode}
+                title={`Switch to ${isDark ? "Light Mode" : "Dark Mode"}`}
+                className="p-1.5 rounded-lg text-base-content/60 hover:text-base-content hover:bg-base-300 transition-colors cursor-pointer"
+              >
+                {mounted && isDark ? (
+                  <Sun className="w-4 h-4 text-warning" />
+                ) : (
+                  <Moon className="w-4 h-4 text-primary" />
+                )}
+              </button>
+              <button
+                onClick={handleLogout}
+                disabled={loggingOut}
+                title="Log out of CRM"
+                className="p-1.5 rounded-lg text-base-content/60 hover:text-error hover:bg-error/10 transition-colors cursor-pointer"
+              >
+                <LogOut className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         </div>
       </aside>
