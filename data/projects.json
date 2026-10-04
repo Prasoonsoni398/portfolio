@@ -1,0 +1,261 @@
+[
+  {
+    "id": "cravings",
+    "title": "Cravings",
+    "slug": "cravings",
+    "tagline": "Modern responsive food discovery and digital ordering experience",
+    "description": "Cravings is an interactive, full-stack food delivery and restaurant discovery platform. It delivers rapid menu search, custom dish curation, real-time cart state synchronization, and an intuitive checkout flow built with responsive modern frontend architecture.",
+    "problem": "Traditional restaurant and food ordering interfaces often suffer from sluggish filter transitions, clunky cart state updates, and poor mobile responsiveness, leading to high cart abandonment.",
+    "solution": "Engineered an ultra-responsive client experience utilizing atomic UI components, optimistic UI state updates for cart modifications, and granular dish filtering with debounced instant search.",
+    "features": [
+      "Dynamic restaurant and cuisine catalog with instant dietary filters",
+      "Interactive dish customizer with real-time price calculation",
+      "Optimistic cart state management with local persistence fallback",
+      "Order status timeline tracker with realistic multi-stage state transitions",
+      "Responsive mobile-first navigation and checkout workflow"
+    ],
+    "technologies": [
+      "React",
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "Node.js",
+      "REST APIs"
+    ],
+    "category": "Full Stack",
+    "featured": true,
+    "image": "/images/projects/cravings.svg",
+    "architectureSummary": "Client-side state synchronization with modular API handlers and responsive presentation components.",
+    "architectureComponents": [
+      {
+        "name": "Frontend Client",
+        "description": "Next.js & React single-page interface with responsive layout",
+        "tech": "React, TypeScript"
+      },
+      {
+        "name": "Cart State Engine",
+        "description": "Reactive store managing cart mutations and calculations",
+        "tech": "React Hooks, Context"
+      },
+      {
+        "name": "Catalog API",
+        "description": "RESTful endpoints delivering categorized menu schemas",
+        "tech": "Node.js, Express"
+      }
+    ],
+    "githubUrl": "https://github.com/Prasoonsoni398/cravings",
+    "liveUrl": "https://cravings-app.demo",
+    "challenges": [
+      "Ensuring zero layout shifts while dynamically loading rich restaurant imagery and categorized menus",
+      "Preserving cart consistency across page reloads without slowing down interactions"
+    ],
+    "metrics": [
+      {
+        "label": "Search Latency",
+        "value": "< 50ms"
+      },
+      {
+        "label": "Mobile Responsiveness",
+        "value": "100%"
+      },
+      {
+        "label": "Components",
+        "value": "25+ Modular"
+      }
+    ]
+  },
+  {
+    "id": "real-time-chat",
+    "title": "Real-Time Communication App",
+    "slug": "real-time-communication-app",
+    "tagline": "WebSocket-powered instant messaging and team collaboration workspace",
+    "description": "A high-performance real-time messaging application supporting instant 1-on-1 and channel communications, live user presence indicators, typing feedback, and resilient connection recovery.",
+    "problem": "Standard HTTP polling introduces significant network overhead and latency in active collaborative workspaces, degrading user trust in real-time communication.",
+    "solution": "Designed a bi-directional WebSocket event architecture backed by Node.js and Express, enabling sub-100ms message delivery, heartbeat presence detection, and optimistic message delivery queues.",
+    "features": [
+      "Bidirectional instant message dispatch via WebSockets",
+      "Live user presence (online/away/offline) with heartbeat pings",
+      "Real-time typing awareness indicators and delivered/read receipts",
+      "Channel-based group rooms and private direct messaging",
+      "Optimistic UI updates with automatic retry upon temporary disconnections"
+    ],
+    "technologies": [
+      "Node.js",
+      "Express",
+      "Socket.io",
+      "React",
+      "TypeScript",
+      "Tailwind CSS"
+    ],
+    "category": "Full Stack",
+    "featured": true,
+    "image": "/images/projects/chat-app.svg",
+    "architectureSummary": "Event-driven WebSocket gateway paired with modular UI chat stream components and optimistic local queue.",
+    "architectureComponents": [
+      {
+        "name": "Socket Gateway",
+        "description": "Handles connection handshakes, room subscriptions, and broadcasting",
+        "tech": "Socket.io / Node.js"
+      },
+      {
+        "name": "Message Feed Engine",
+        "description": "Renders virtualized chat streams with zero frame drops",
+        "tech": "React, Virtual Scroll"
+      },
+      {
+        "name": "Presence Service",
+        "description": "Maintains heartbeats and broadcasts status transitions",
+        "tech": "In-memory Store"
+      }
+    ],
+    "githubUrl": "https://github.com/Prasoonsoni398/Real-Time-Communication-App",
+    "liveUrl": "https://chat-app-two-rosy-94.vercel.app/",
+    "challenges": [
+      "Handling graceful socket reconnections during transient mobile network drops without duplicate messages",
+      "Managing scroll retention when fetching historical chat segments asynchronously"
+    ],
+    "metrics": [
+      {
+        "label": "Message Latency",
+        "value": "< 80ms"
+      },
+      {
+        "label": "Socket Recovery",
+        "value": "Auto-reconnect"
+      },
+      {
+        "label": "Live Rooms",
+        "value": "Multi-channel"
+      }
+    ]
+  },
+  {
+    "id": "form-builder",
+    "title": "Form Builder",
+    "slug": "form-builder",
+    "tagline": "Interactive drag-and-drop digital form builder with live schema generation",
+    "description": "An intuitive web application allowing users to dynamically compose complex custom forms with custom validation rules, conditional logic, live form previews, and JSON schema import/export.",
+    "problem": "Building custom data collection forms typically requires repetitive frontend and backend coding cycles for validation and UI layout.",
+    "solution": "Built a drag-and-drop visual builder that compiles user configurations into standardized JSON schemas, instantly rendering dynamic form fields with automated validation hooks.",
+    "features": [
+      "Interactive field palette (text, email, select, checkbox, radio, date, file)",
+      "Real-time drag-and-drop canvas reordering",
+      "Configurable validation rules (regex patterns, required toggles, min/max lengths)",
+      "Dual-mode live preview with interactive form test-submissions",
+      "Schema JSON export and instant form template cloning"
+    ],
+    "technologies": [
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "HTML5 Drag & Drop",
+      "JSON Schema"
+    ],
+    "category": "Frontend",
+    "featured": true,
+    "image": "/images/projects/form-builder.svg",
+    "architectureSummary": "Schema-driven state pipeline translating field layout definitions into responsive, validated form elements.",
+    "architectureComponents": [
+      {
+        "name": "Palette & Canvas",
+        "description": "Interactive drag sources and drop zones with insertion markers",
+        "tech": "React DND"
+      },
+      {
+        "name": "Schema Compiler",
+        "description": "Transforms visual canvas state into portable validation schema",
+        "tech": "TypeScript"
+      },
+      {
+        "name": "Form Renderer",
+        "description": "Dynamically renders reactive input controls based on active schema",
+        "tech": "React, Tailwind"
+      }
+    ],
+    "githubUrl": "https://github.com/Prasoonsoni398/form-builder",
+    "liveUrl": "https://form-builder.demo",
+    "challenges": [
+      "Constructing an extensible validator engine that verifies multi-field conditional dependencies without circular re-renders",
+      "Delivering smooth 60fps drag-and-drop feedback across varied viewports"
+    ],
+    "metrics": [
+      {
+        "label": "Supported Field Types",
+        "value": "10+ Types"
+      },
+      {
+        "label": "Schema Export",
+        "value": "Standard JSON"
+      },
+      {
+        "label": "Live Validation",
+        "value": "Real-time"
+      }
+    ]
+  },
+  {
+    "id": "voting-management-system",
+    "title": "Voting Management System",
+    "slug": "voting-management-system",
+    "tagline": "Secure full-stack digital voting platform with verified ballot counting",
+    "description": "A robust digital voting management application engineered for election workflows, cryptographic ballot integrity, candidate management, and real-time auditable vote analytics.",
+    "problem": "Conventional organizational voting faces issues with voter verification, physical ballot distribution costs, and opacity in election counting.",
+    "solution": "Engineered an end-to-end voting application with strict one-vote constraints, candidate ballot configurations, and instant tabulation graphs.",
+    "features": [
+      "Voter credential authentication with single-ballot verification",
+      "Interactive ballot sheet with instant candidate profile review",
+      "Real-time election tally graphs and percentage breakdowns",
+      "Administrator election creation, candidate nomination, and audit logs",
+      "Responsive voter interface with confirm-vote safety dialogs"
+    ],
+    "technologies": [
+      "React",
+      "Node.js",
+      "Express",
+      "PostgreSQL",
+      "REST APIs",
+      "TypeScript"
+    ],
+    "category": "Full Stack",
+    "featured": false,
+    "image": "/images/projects/voting-app.svg",
+    "architectureSummary": "Relational database backed voting engine with strict transaction isolation and RESTful API endpoints.",
+    "architectureComponents": [
+      {
+        "name": "Voter Portal",
+        "description": "Accessible ballot submission interface with confirmation guards",
+        "tech": "React, Tailwind"
+      },
+      {
+        "name": "Election Backend",
+        "description": "Transactional API enforcing ballot exclusivity and audit trails",
+        "tech": "Node.js, Express"
+      },
+      {
+        "name": "Relational Database",
+        "description": "Structured tables for ballots, votes, and candidates",
+        "tech": "PostgreSQL"
+      }
+    ],
+    "githubUrl": "https://github.com/Prasoonsoni398",
+    "liveUrl": "https://voting-system.demo",
+    "challenges": [
+      "Ensuring atomic ballot submissions to eliminate double-voting in concurrent load situations",
+      "Preserving voter privacy while maintaining deterministic recount audit logs"
+    ],
+    "metrics": [
+      {
+        "label": "Ballot Integrity",
+        "value": "100% Atomic"
+      },
+      {
+        "label": "Audit Precision",
+        "value": "Real-time"
+      },
+      {
+        "label": "Security",
+        "value": "Single-Vote Guard"
+      }
+    ]
+  }
+]

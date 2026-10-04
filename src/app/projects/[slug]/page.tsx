@@ -8,20 +8,22 @@ import { projects } from "@/mockdata/projects";
 import { constructMetadata } from "@/lib/metadata";
 import { Container } from "@/components/layout/Container";
 import { Badge } from "@/components/common/Badge";
+import { db } from "@/lib/db";
 
 interface ProjectDetailsPageProps {
   params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
-  return projects.map((p) => ({
+  const all = db.getProjects();
+  return all.map((p) => ({
     slug: p.slug
   }));
 }
 
 export async function generateMetadata({ params }: ProjectDetailsPageProps) {
   const { slug } = await params;
-  const project = projects.find((p) => p.slug === slug);
+  const project = db.getProjectBySlug(slug) || projects.find((p) => p.slug === slug);
   if (!project) return constructMetadata({ title: "Project Not Found" });
 
   return constructMetadata({
@@ -32,7 +34,7 @@ export async function generateMetadata({ params }: ProjectDetailsPageProps) {
 
 export default async function ProjectDetailsPage({ params }: ProjectDetailsPageProps) {
   const { slug } = await params;
-  const project = projects.find((p) => p.slug === slug);
+  const project = db.getProjectBySlug(slug) || projects.find((p) => p.slug === slug);
 
   if (!project) {
     notFound();

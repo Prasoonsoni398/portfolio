@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { ArrowUp } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/constants";
 
@@ -29,6 +30,13 @@ export function Footer() {
           <span className="inline-flex items-center gap-1.5">
             Made with <span className="text-red-500 animate-pulse">❤️</span> by Prasoon
           </span>
+          <span className="hidden sm:inline text-base-content/40">•</span>
+          <Link
+            href="/admin"
+            className="text-base-content/40 hover:text-primary transition-colors"
+          >
+            Admin CRM
+          </Link>
         </div>
       </footer>
 

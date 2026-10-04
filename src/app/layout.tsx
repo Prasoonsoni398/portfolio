@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/common/Navbar";
 import { Footer } from "@/components/common/Footer";
 import { constructMetadata } from "@/lib/metadata";
+import { SiteShell } from "@/components/common/SiteShell";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,11 +38,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col bg-base-100 text-base-content selection:bg-primary/20 selection:text-primary">
-        <Navbar />
-        <main className="flex-1">
-          {children}
-        </main>
-        <Footer />
+        <SiteShell>{children}</SiteShell>
       </body>
     </html>
   );

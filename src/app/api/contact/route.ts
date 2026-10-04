@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { validateContactForm } from "@/lib/validations";
+import { db } from "@/lib/db";
 
 export async function POST(request: Request) {
   try {
@@ -11,6 +12,18 @@ export async function POST(request: Request) {
         { success: false, errors },
         { status: 400 }
       );
+    }
+
+    // Persist lead directly into Portfolio CRM Lead Database
+    try {
+      db.addInquiry({
+        name: body.name,
+        email: body.email,
+        subject: body.subject || "New Portfolio Inquiry",
+        message: body.message
+      });
+    } catch (dbErr) {
+      console.error("Failed to store lead inquiry in CRM db:", dbErr);
     }
 
     // EmailJS Credentials from .env

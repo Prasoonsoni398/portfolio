@@ -11,20 +11,31 @@ import { AchievementsSection } from "@/components/achievements/AchievementsSecti
 import { ServicesSection } from "@/components/services/ServicesSection";
 import { ResumeSection } from "@/components/resume/ResumeSection";
 import { ContactSection } from "@/components/contact/ContactSection";
+import { db } from "@/lib/db";
+
+export const dynamic = "force-dynamic";
 
 export default function HomePage() {
+  const projects = db.getProjects();
+  const skills = db.getSkills();
+  const experiences = db.getExperiences();
+  const educations = db.getEducations();
+  const certifications = db.getCertifications();
+  const achievements = db.getAchievements();
+  const services = db.getServices();
+
   return (
     <>
       <Hero />
       <StatsSection />
       <AboutSection />
-      <SkillsSection />
-      <ProjectsSection />
-      <ExperienceSection />
-      <EducationSection />
-      <CertificationsSection />
-      <AchievementsSection />
-      <ServicesSection />
+      <SkillsSection skillGroups={skills} />
+      <ProjectsSection projects={projects} />
+      <ExperienceSection experiences={experiences} />
+      <EducationSection educations={educations} />
+      <CertificationsSection certifications={certifications} />
+      <AchievementsSection achievements={achievements} />
+      <ServicesSection services={services} />
       <ResumeSection />
       <ContactSection />
     </>

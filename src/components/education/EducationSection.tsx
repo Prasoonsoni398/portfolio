@@ -1,10 +1,12 @@
 import React from "react";
-import { educations } from "@/mockdata/education";
+import { educations as defaultEducations } from "@/mockdata/education";
+import { Education } from "@/types/education";
 import { SectionHeading } from "../common/SectionHeading";
 import { SectionWrapper } from "../layout/SectionWrapper";
 import { GraduationCap, CheckCircle } from "lucide-react";
 
-export function EducationSection() {
+export function EducationSection({ educations: propEducations }: { educations?: Education[] } = {}) {
+  const educations = propEducations && propEducations.length > 0 ? propEducations : defaultEducations;
   return (
     <SectionWrapper id="education" altBg>
       <SectionHeading

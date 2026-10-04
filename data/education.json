@@ -1,0 +1,24 @@
+[
+  {
+    "id": "btech-rgpv",
+    "degree": "Bachelor of Technology (B.Tech)",
+    "field": "Computer Science & Engineering",
+    "institution": "Affiliated Engineering College",
+    "university": "Rajiv Gandhi Proudyogiki Vishwavidyalaya (RGPV)",
+    "location": "Bhopal, Madhya Pradesh",
+    "completionYear": "2026",
+    "highlights": [
+      "Completed rigorous computer engineering curriculum emphasizing core software development and computational theory.",
+      "Spearheaded technical development in academic capstone and software laboratory projects.",
+      "Active participant in technical coding clubs and competitive problem-solving sessions."
+    ],
+    "coursework": [
+      "Data Structures & Algorithms",
+      "Object-Oriented Programming (Java/C++)",
+      "Database Management Systems (RDBMS)",
+      "Web Technologies & Architectures",
+      "Operating Systems & Computer Networks",
+      "Software Engineering & Agile Methodologies"
+    ]
+  }
+]

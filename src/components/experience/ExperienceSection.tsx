@@ -1,15 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
-import { experiences } from "@/mockdata/experience";
+import { experiences as defaultExperiences } from "@/mockdata/experience";
+import { Experience } from "@/types/experience";
 import { SectionHeading } from "../common/SectionHeading";
 import { SectionWrapper } from "../layout/SectionWrapper";
 import { Badge } from "../common/Badge";
 import { Calendar, MapPin, CheckCircle2, ChevronDown, ChevronUp } from "lucide-react";
 import { formatDate } from "@/utils/formatDate";
 
-export function ExperienceSection() {
-  const [expandedId, setExpandedId] = useState<string>(experiences[0].id);
+export function ExperienceSection({ experiences: propExperiences }: { experiences?: Experience[] } = {}) {
+  const experiences = propExperiences && propExperiences.length > 0 ? propExperiences : defaultExperiences;
+  const [expandedId, setExpandedId] = useState<string>(experiences[0]?.id || "");
 
   const toggleExpand = (id: string) => {
     setExpandedId(expandedId === id ? "" : id);

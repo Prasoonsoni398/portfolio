@@ -3,6 +3,9 @@ import { constructMetadata } from "@/lib/metadata";
 import { ProjectsSection } from "@/components/projects/ProjectsSection";
 import { Container } from "@/components/layout/Container";
 import { SITE_CONFIG } from "@/lib/constants";
+import { db } from "@/lib/db";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = constructMetadata({
   title: `Projects | ${SITE_CONFIG.name}`,
@@ -10,6 +13,8 @@ export const metadata = constructMetadata({
 });
 
 export default function ProjectsPage() {
+  const projects = db.getProjects();
+
   return (
     <div className="pt-20">
       <div className="py-12 bg-base-200/40 border-b border-base-300">
@@ -23,7 +28,7 @@ export default function ProjectsPage() {
         </Container>
       </div>
 
-      <ProjectsSection />
+      <ProjectsSection projects={projects} />
     </div>
   );
 }

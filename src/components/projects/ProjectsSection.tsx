@@ -20,12 +20,14 @@ import {
   Flame
 } from "lucide-react";
 import { GithubIcon } from "../common/Icons";
-import { projects } from "@/mockdata/projects";
+import { projects as defaultProjects } from "@/mockdata/projects";
+import { Project } from "@/types/project";
 import { SectionHeading } from "../common/SectionHeading";
 import { SectionWrapper } from "../layout/SectionWrapper";
 import { Badge } from "../common/Badge";
 
-export function ProjectsSection() {
+export function ProjectsSection({ projects: propProjects }: { projects?: Project[] } = {}) {
+  const projects = propProjects && propProjects.length > 0 ? propProjects : defaultProjects;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [detailTab, setDetailTab] = useState<"overview" | "architecture" | "features">("overview");
   const [showXRay, setShowXRay] = useState(false);

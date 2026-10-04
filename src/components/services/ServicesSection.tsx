@@ -1,5 +1,6 @@
 import React from "react";
-import { services } from "@/mockdata/services";
+import { services as defaultServices } from "@/mockdata/services";
+import { Service } from "@/types/service";
 import { SectionHeading } from "../common/SectionHeading";
 import { SectionWrapper } from "../layout/SectionWrapper";
 import {
@@ -11,7 +12,8 @@ import {
   CheckCircle2,
 } from "lucide-react";
 
-export function ServicesSection() {
+export function ServicesSection({ services: propServices }: { services?: Service[] } = {}) {
+  const services = propServices && propServices.length > 0 ? propServices : defaultServices;
   const iconMap: Record<string, React.ReactNode> = {
     Layout: <Layout className="w-5 h-5" />,
     Layers: <Layers className="w-5 h-5" />,

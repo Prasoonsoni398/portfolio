@@ -3,7 +3,7 @@
 import React, { useRef, useState, useEffect, useMemo, useCallback } from "react";
 import Link from "next/link";
 import { skillGroups } from "@/mockdata/skills";
-import { SkillCategory, SkillItem } from "@/types/skill";
+import { SkillCategory, SkillGroup, SkillItem } from "@/types/skill";
 import { SectionHeading } from "../common/SectionHeading";
 import { SectionWrapper } from "../layout/SectionWrapper";
 import {
@@ -215,7 +215,8 @@ type SkillWithCategory = SkillItem & {
   stars: number;
 };
 
-export function SkillsSection() {
+export function SkillsSection({ skillGroups: propSkillGroups }: { skillGroups?: SkillGroup[] } = {}) {
+  const currentSkillGroups = propSkillGroups && propSkillGroups.length > 0 ? propSkillGroups : skillGroups;
   const [viewMode, setViewMode] = useState<"carousel" | "coverflow">("carousel");
   const [isPaused, setIsPaused] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<SkillCategory | "All">("All");
@@ -234,7 +235,7 @@ export function SkillsSection() {
     ];
     let colorIdx = 0;
 
-    return skillGroups.flatMap((g) =>
+    return currentSkillGroups.flatMap((g) =>
       g.skills.map((s) => {
         const color = palette[colorIdx % palette.length];
         colorIdx++;

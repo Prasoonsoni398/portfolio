@@ -1,10 +1,12 @@
 import React from "react";
-import { achievements } from "@/mockdata/achievements";
+import { achievements as defaultAchievements } from "@/mockdata/achievements";
+import { Achievement } from "@/types/achievement";
 import { SectionHeading } from "../common/SectionHeading";
 import { SectionWrapper } from "../layout/SectionWrapper";
 import { Trophy, ExternalLink } from "lucide-react";
 
-export function AchievementsSection() {
+export function AchievementsSection({ achievements: propAchievements }: { achievements?: Achievement[] } = {}) {
+  const achievements = propAchievements && propAchievements.length > 0 ? propAchievements : defaultAchievements;
   return (
     <SectionWrapper id="achievements" altBg>
       <SectionHeading

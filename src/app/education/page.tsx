@@ -5,6 +5,9 @@ import { CertificationsSection } from "@/components/certifications/Certification
 import { AchievementsSection } from "@/components/achievements/AchievementsSection";
 import { Container } from "@/components/layout/Container";
 import { SITE_CONFIG } from "@/lib/constants";
+import { db } from "@/lib/db";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = constructMetadata({
   title: `Education & Credentials | ${SITE_CONFIG.name}`,
@@ -12,6 +15,10 @@ export const metadata = constructMetadata({
 });
 
 export default function EducationPage() {
+  const educations = db.getEducations();
+  const certifications = db.getCertifications();
+  const achievements = db.getAchievements();
+
   return (
     <div className="pt-20">
       <div className="py-12 bg-base-200/40 border-b border-base-300">
@@ -25,9 +32,9 @@ export default function EducationPage() {
         </Container>
       </div>
 
-      <EducationSection />
-      <CertificationsSection />
-      <AchievementsSection />
+      <EducationSection educations={educations} />
+      <CertificationsSection certifications={certifications} />
+      <AchievementsSection achievements={achievements} />
     </div>
   );
 }

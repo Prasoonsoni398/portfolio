@@ -1,0 +1,70 @@
+[
+  {
+    "id": "raj-digital-trainee",
+    "role": "Trainee",
+    "organization": "Raj Digital",
+    "location": "Bhopal, India",
+    "startDate": "2026-07-01",
+    "endDate": "Present",
+    "isCurrent": true,
+    "type": "Traineeship",
+    "summary": "Engaged in hands-on development of production-grade responsive web applications, modern UI engineering, and API integration workflows within an agile team setting.",
+    "responsibilities": [
+      "Develop responsive and accessible web interfaces using React.js, Next.js, and modern CSS frameworks.",
+      "Collaborate with senior developers and designers to translate product specifications into high-fidelity interactive components.",
+      "Integrate RESTful backend endpoints with robust error handling and optimistic UI state management.",
+      "Implement clean code practices, TypeScript type safety, and component modularity across client features."
+    ],
+    "technologies": [
+      "React.js",
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "JavaScript",
+      "REST APIs",
+      "Git"
+    ],
+    "achievements": [
+      "Engineered reusable UI component patterns that increased development turnaround for customer-facing interfaces.",
+      "Contributed to cross-device UI optimization ensuring consistent experience across desktop, tablet, and mobile browsers."
+    ],
+    "highlights": [
+      "Active Traineeship",
+      "Full-Stack Web Engineering",
+      "Agile Teamwork"
+    ]
+  },
+  {
+    "id": "raj-institute-content-developer",
+    "role": "Content Developer — Java & DSA",
+    "organization": "Raj Institute of Coding and Robotics",
+    "location": "Bhopal, India",
+    "startDate": "2025-01-01",
+    "endDate": "2026-06-30",
+    "isCurrent": false,
+    "type": "Educational Content Development",
+    "summary": "Created comprehensive, interactive, and animated pedagogical solutions for complex Data Structures and Algorithms in Java for aspiring software engineers.",
+    "responsibilities": [
+      "Formulated step-by-step algorithmic solutions in Java covering arrays, linked lists, binary trees, graphs, and dynamic programming.",
+      "Designed and produced animated visual walkthroughs illustrating pointer traversals, recursion stacks, and memory allocations.",
+      "Authored rigorous problem statements, test cases, and edge-case analytical explanations for educational modules.",
+      "Mentored and supported students on core Java object-oriented principles, code optimization, and Big-O computational complexity."
+    ],
+    "technologies": [
+      "Java",
+      "Data Structures & Algorithms",
+      "Animation Tooling",
+      "OOP",
+      "Problem Solving"
+    ],
+    "achievements": [
+      "Created dozens of animated DSA solutions that demystified abstract algorithmic concepts for hundreds of learners.",
+      "Synthesized complex problem-solving patterns into digestible, structured learning materials."
+    ],
+    "highlights": [
+      "Algorithmic Visualizations",
+      "Java Expertise",
+      "Student Impact"
+    ]
+  }
+]

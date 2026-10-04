@@ -1,10 +1,12 @@
 import React from "react";
-import { certifications } from "@/mockdata/certifications";
+import { certifications as defaultCertifications } from "@/mockdata/certifications";
+import { Certification } from "@/types/certification";
 import { SectionHeading } from "../common/SectionHeading";
 import { SectionWrapper } from "../layout/SectionWrapper";
 import { Award } from "lucide-react";
 
-export function CertificationsSection() {
+export function CertificationsSection({ certifications: propCertifications }: { certifications?: Certification[] } = {}) {
+  const certifications = propCertifications && propCertifications.length > 0 ? propCertifications : defaultCertifications;
   return (
     <SectionWrapper id="certifications">
       <SectionHeading
